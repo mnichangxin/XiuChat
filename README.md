@@ -1,2 +1,3 @@
 # XiuChat
-Every meeting is a kind of fate.
+
+每一次相遇，都是一种缘分
