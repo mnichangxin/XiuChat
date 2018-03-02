@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,59 @@ public class ViewSlideActivity extends AppCompatActivity {
     private View view2;
     private View view3;
     private ViewPager viewPager;
+    private ImageView imageViews[];
     private ArrayList<View> viewList;
 
+    private void initViewPager() {
+        LinearLayout container = (LinearLayout) findViewById(R.id.ll_container);
+
+        imageViews = new ImageView[viewList.size()];
+        LinearLayout.LayoutParams margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        // 设置每个小圆点距离做左边的的间距
+        margin.setMargins(15, 0, 0, 0);
+
+        for (int i = 0; i < viewList.size(); i++) {
+            ImageView imageView = new ImageView(ViewSlideActivity.this);
+
+            // 设置每个小圆点的宽高
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(5, 5));
+            imageViews[i] = imageView;
+
+            if (i == 0) {
+                // 默认选中第一个圆点
+                imageViews[i].setBackgroundResource(R.drawable.shape_point_white);
+            } else {
+                // 其他设为未选中状态
+                imageViews[i].setBackgroundResource(R.drawable.shape_point_gray);
+            }
+            container.addView(imageView, margin);
+        }
+
+        viewPager = findViewById(R.id.view_pager);
+
+        viewPager.setAdapter(new ViewPagerAdapter(viewList));
+        viewPager.setCurrentItem(0);
+
+        // 监听滑动事件
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < viewList.size(); i++) {
+                    imageViews[position].setBackgroundResource(R.drawable.shape_point_white);
+                    if (position != i) {
+                        imageViews[position].setBackgroundResource(R.drawable.shape_point_gray);
+                    }
+                }
+            }
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +87,7 @@ public class ViewSlideActivity extends AppCompatActivity {
         viewList.add(view2);
         viewList.add(view3);
 
-        viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(new ViewPagerAdapter(viewList));
-        viewPager.setCurrentItem(0);
+        initViewPager();
     }
 
     public class ViewPagerAdapter extends PagerAdapter {
