@@ -22,9 +22,10 @@
         android:layout_centerHorizontal="true"
         android:layout_width="203dp"
         android:layout_height="46dp"
-        android:text="探索「秀聊」"
+        android:text="探索「咻聊」"
         android:textColor="#fff"
         android:textSize="20sp"
         android:background="@drawable/shape"
         android:alpha=".75" />
 </RelativeLayout>
+
