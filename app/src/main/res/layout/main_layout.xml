@@ -25,7 +25,7 @@
         android:text="探索「咻聊」"
         android:textColor="#fff"
         android:textSize="20sp"
-        android:background="@drawable/shape_border_radius"
+        android:background="@drawable/shape_button1_radius"
         android:alpha=".75" />
 </RelativeLayout>
 

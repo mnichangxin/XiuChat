@@ -1,3 +1,8 @@
+/*
+ *  圆形 ImageView 工具
+ *  来源：http://blog.csdn.net/csdnzouqi/article/details/52014489
+ */
+
 package com.lichangxin.xiuchat.utils;
 
 import android.content.Context;
