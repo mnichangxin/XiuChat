@@ -1,6 +1,7 @@
 package com.lichangxin.xiuchat;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class ViewSlideActivity extends AppCompatActivity {
     private ImageView imageViews[];
     private ImageView imageView;
     private ArrayList<View> viewList;
+    private Button skipBtn;
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)  。
@@ -68,11 +70,22 @@ public class ViewSlideActivity extends AppCompatActivity {
         }
 
         viewPager = findViewById(R.id.view_pager);
+        skipBtn = (Button) findViewById(R.id.skip_button);
 
         // 添加适配器数据
         viewPager.setAdapter(new ViewPagerAdapter(viewList));
         viewPager.setCurrentItem(0);
 
+        // 监听跳过按钮事件
+        skipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp = getSharedPreferences("view_page", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean("isOpen", true);
+                editor.commit();
+            }
+        });
         // 监听滑动事件
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -85,7 +98,6 @@ public class ViewSlideActivity extends AppCompatActivity {
                 imageViews[position].setBackgroundResource(R.drawable.shape_point_white);
 
                 if (position == viewList.size() - 1) {
-                    Button skipBtn = (Button) findViewById(R.id.skip_button);
                     skipBtn.setText("开启咻聊");
                 }
             }
