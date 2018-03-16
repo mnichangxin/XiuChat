@@ -9,10 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,10 +78,16 @@ public class ViewSlideActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 Log.d("ViewSlideActivity", "" + position);
+
                 for (int i = 0; i < viewList.size(); i++) {
                     imageViews[i].setBackgroundResource(R.drawable.shape_point_gray);
                 }
                 imageViews[position].setBackgroundResource(R.drawable.shape_point_white);
+
+                if (position == viewList.size() - 1) {
+                    Button skipBtn = (Button) findViewById(R.id.skip_button);
+                    skipBtn.setText("开启咻聊");
+                }
             }
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
