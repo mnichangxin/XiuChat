@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is a Activity Login Box" />
-</FrameLayout>
+    android:layout_height="match_parent"
+    android:background="#091E2E" >
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_width="279dp"
+        android:layout_height="404dp"
+        android:padding="30dp"
+        android:background="@drawable/shape_login_bg"
+        android:alpha=".8"
+        android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_edit_radius"
+            android:hint="Email"
+            android:textColorHint="#bbb" />
+    </LinearLayout>
+</RelativeLayout>

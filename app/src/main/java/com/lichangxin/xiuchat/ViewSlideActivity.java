@@ -1,6 +1,7 @@
 package com.lichangxin.xiuchat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -84,6 +85,10 @@ public class ViewSlideActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putBoolean("isOpen", true);
                 editor.commit();
+
+                Intent intent = new Intent(ViewSlideActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         // 监听滑动事件
