@@ -11,16 +11,22 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static String name = "xiuchat.db";
     private static int version = 1;
 
-    public DBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    // 登录表 SQL
+    private String sql_login = "CREATE TABLE user(" +
+            "id integer primary key autoincrement" +
+            "username varchar(64)" +
+            "password varchar(64)" +
+            ")";
+
+    public DBOpenHelper(Context context) {
+        super(context, name, null, version);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(sql_login);
     }
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
     }
 }
