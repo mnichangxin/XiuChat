@@ -1,6 +1,8 @@
 package com.lichangxin.xiuchat;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -22,17 +24,24 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Boolean switchStatus = false;
 
+    // 跳转到主界面
+    private void activityToMain() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     // 登录注册验证
     private void verify(String username, String password, String type) {
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "用户名或密码为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (Pattern.matches("[a-zA-Z_]+[0-9]*@(([a-zA-z0-9]-*)+\\\\.){1,3}[a-zA-z\\\\-]+", username) && Pattern.matches("^[1][3,4,5,7,8][0-9]{9}$", username)) {
+        if (!(Pattern.matches("^[1][3,4,5,6,7,8,9][0-9]{9}$", username) || Pattern.matches("[a-zA-Z_]+[0-9]*@(([a-zA-z0-9]-*)+\\\\.){1,3}[a-zA-z\\\\-]+", username))) {
             Toast.makeText(this, "用户名格式有误", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (Pattern.matches("\\w{6,}", password)) {
+        if (!Pattern.matches("\\w{6,}", password)) {
             Toast.makeText(this, "密码至少6位长度", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -52,7 +61,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (cursor.moveToFirst()) {
                     for (int i = 0; i < cursor.getCount(); i++) {
+                        cursor.moveToPosition(i);
+
                         if (cursor.getString(1).equals(username) && cursor.getString(2).equals(password)) {
+                            SharedPreferences pf = getSharedPreferences("loginInfo", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pf.edit();
+                            editor.putString("username", username);
+                            editor.putString("password", password);
+                            editor.commit();
+
                             loginSuccess = true;
                             break;
                         }
@@ -62,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "用户名或密码有误", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+
+                    activityToMain();
                 }
                 break;
             case "register":
@@ -69,6 +88,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (cursor.moveToFirst()) {
                     for (int i = 0; i < cursor.getCount(); i++) {
+                        cursor.moveToPosition(i);
+
                         if (cursor.getString(1).equals(username)) {
                             regSuccess = false;
                             break;
@@ -77,18 +98,24 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (regSuccess) {
                     db.insert("user", null, contentValues);
-                    Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "该用户名已注册过", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences pf = getSharedPreferences("loginInfo", MODE_PRIVATE);
+
+        if (pf.getString("username", null) != null && pf.getString("password", null) != null) {
+            verify(pf.getString("username", null), pf.getString("password", null), "login");
+        }
+
         setContentView(R.layout.login_layout);
 
         loginButton = findViewById(R.id.login_button);

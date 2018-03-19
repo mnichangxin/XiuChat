@@ -81,8 +81,8 @@ public class ViewSlideActivity extends AppCompatActivity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sp = getSharedPreferences("view_page", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
+                SharedPreferences pf = getSharedPreferences("view_page", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pf.edit();
                 editor.putBoolean("isOpen", true);
                 editor.commit();
 

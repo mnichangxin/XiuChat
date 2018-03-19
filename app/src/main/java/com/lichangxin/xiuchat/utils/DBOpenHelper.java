@@ -12,11 +12,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static int version = 1;
 
     // 登录表 SQL
-    private String sql_login = "CREATE TABLE user(" +
-            "id integer primary key autoincrement" +
-            "username varchar(64)" +
+    private String sql_login = "create table user(" +
+            "id integer primary key autoincrement," +
+            "username varchar(64)," +
             "password varchar(64)" +
-            ")";
+            ");";
 
     public DBOpenHelper(Context context) {
         super(context, name, null, version);
