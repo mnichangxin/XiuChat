@@ -1,5 +1,7 @@
 package com.lichangxin.xiuchat;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    private NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,17 +22,26 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer);
+        navView = findViewById(R.id.nav_view);
 
         // 设置 Toolbar
         setSupportActionBar(toolbar);
-
         ActionBar actionBar = getSupportActionBar();
 
-        // 显示导航
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
+
+        // 设置导航
+        navView.setCheckedItem(R.id.nav_call);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 
     @Override
