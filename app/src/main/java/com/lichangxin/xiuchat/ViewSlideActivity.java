@@ -1,6 +1,5 @@
 package com.lichangxin.xiuchat;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.PagerAdapter;
@@ -18,6 +17,8 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lichangxin.xiuchat.utils.Convert;
+
 public class ViewSlideActivity extends AppCompatActivity {
     private View view1;
     private View view2;
@@ -28,36 +29,21 @@ public class ViewSlideActivity extends AppCompatActivity {
     private ArrayList<View> viewList;
     private Button skipBtn;
 
-    /**
-     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)  。
-     */
-    public static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
-    /**
-     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp 。
-     */
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
-
     /* 初始化 ViewPager */
     private void initViewPager() {
-        ViewGroup container = (ViewGroup) findViewById(R.id.ll_container);
+        ViewGroup container = findViewById(R.id.ll_container);
 
         imageViews = new ImageView[viewList.size()];
         LinearLayout.LayoutParams margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         // 设置每个小圆点距离做左边的的间距
-        margin.setMargins(px2dip(this, 20), 0, 0, 0);
+        margin.setMargins(Convert.px2dip(this, 20), 0, 0, 0);
 
         for (int i = 0; i < viewList.size(); i++) {
             imageView = new ImageView(ViewSlideActivity.this);
 
             // 设置每个小圆点的宽高
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(px2dip(this, 10), px2dip(this,10)));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(Convert.px2dip(this, 10), Convert.px2dip(this,10)));
             imageViews[i] = imageView;
 
             if (i == 0) {
@@ -126,7 +112,7 @@ public class ViewSlideActivity extends AppCompatActivity {
         view2 = inflater.inflate(R.layout.view_page2, null);
         view3 = inflater.inflate(R.layout.view_page3, null);
 
-        viewList = new ArrayList<View>();
+        viewList = new ArrayList<>();
         viewList.add(view1);
         viewList.add(view2);
         viewList.add(view3);

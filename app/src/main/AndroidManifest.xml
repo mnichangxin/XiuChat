@@ -17,7 +17,7 @@
         </activity>
         <activity android:name=".ViewSlideActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" android:label="咻聊"></activity>
+        <activity android:name=".MainActivity" android:label=""></activity>
     </application>
 
 </manifest>

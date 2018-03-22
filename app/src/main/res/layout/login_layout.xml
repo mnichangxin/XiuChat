@@ -48,6 +48,7 @@
             android:padding="10dp"
             android:text="登 录"
             android:textSize="20sp"
+            android:textColor="#fff"
             android:background="@drawable/shape_login_button" />
     </LinearLayout>
     <TextView

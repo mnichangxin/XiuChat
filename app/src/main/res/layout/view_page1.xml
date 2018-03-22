@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:text="我遇见你，我记得你"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#fff" />
     </LinearLayout>
 </RelativeLayout>

@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:text="我来到你的城市"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#fff" />
     </LinearLayout>
 </RelativeLayout>
