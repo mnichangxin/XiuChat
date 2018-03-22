@@ -63,7 +63,7 @@ public class ViewSlideActivity extends AppCompatActivity {
         viewPager.setAdapter(new ViewPagerAdapter(viewList));
         viewPager.setCurrentItem(0);
 
-        // 监听跳过按钮事件
+        // 设置跳过按钮事件
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,15 +77,14 @@ public class ViewSlideActivity extends AppCompatActivity {
                 finish();
             }
         });
-        // 监听滑动事件
+        // 设置滑动事件
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                Log.d("ViewSlideActivity", "" + position);
-
                 for (int i = 0; i < viewList.size(); i++) {
                     imageViews[i].setBackgroundResource(R.drawable.shape_point_gray);
                 }
+
                 imageViews[position].setBackgroundResource(R.drawable.shape_point_white);
 
                 if (position == viewList.size() - 1) {

@@ -1,5 +1,6 @@
 package com.lichangxin.xiuchat;
 
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +23,27 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView navView;
+
     private ViewPager mainViewPager;
+    private ArrayList<View> viewList;
     private View dynamic;
     private View encounter;
     private View chat;
-    private ArrayList<View> viewList;
+
+    private ArrayList<ImageView> imageViewList;
+    private ImageView dynamicImageView;
+    private ImageView encounterImageView;
+    private ImageView chatImageView;
+
+    private ArrayList<Integer> primaryDrawable;
+    private ArrayList<Integer> activeDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+
+        LayoutInflater inflater = getLayoutInflater().from(this);
 
         toolbar =  findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer);
@@ -41,17 +54,34 @@ public class MainActivity extends AppCompatActivity {
         encounter = findViewById(R.id.encounter);
         chat = findViewById(R.id.chat);
 
-        LayoutInflater inflater = getLayoutInflater().from(this);
+        dynamicImageView = findViewById(R.id.dynamic_image);
+        encounterImageView = findViewById(R.id.encounter_image);
+        chatImageView = findViewById(R.id.chat_image);
 
         dynamic = inflater.inflate(R.layout.dynamic, null);
         encounter = inflater.inflate(R.layout.encounter, null);
         chat = inflater.inflate(R.layout.chat, null);
 
         viewList = new ArrayList<>();
+        imageViewList = new ArrayList<>();
+        primaryDrawable = new ArrayList<>();
+        activeDrawable = new ArrayList<>();
 
         viewList.add(dynamic);
         viewList.add(encounter);
         viewList.add(chat);
+
+        imageViewList.add(dynamicImageView);
+        imageViewList.add(encounterImageView);
+        imageViewList.add(chatImageView);
+
+        primaryDrawable.add(R.drawable.ic_dynamic);
+        primaryDrawable.add(R.drawable.ic_encounter);
+        primaryDrawable.add(R.drawable.ic_chat);
+
+        activeDrawable.add(R.drawable.ic_dynamic_active);
+        activeDrawable.add(R.drawable.ic_encounter_active);
+        activeDrawable.add(R.drawable.ic_chat_active);
 
         // 设置 Toolbar
         setSupportActionBar(toolbar);
@@ -75,6 +105,25 @@ public class MainActivity extends AppCompatActivity {
         // 设置主 ViewPager
         mainViewPager.setAdapter(new ViewPagerAdapter(viewList));
         mainViewPager.setCurrentItem(0);
+
+        imageViewList.get(0).setImageResource(activeDrawable.get(0));
+
+        // 设置滑动事件
+        mainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < imageViewList.size(); i++) {
+                    imageViewList.get(i).setImageResource(primaryDrawable.get(i));
+                }
+                imageViewList.get(position).setImageResource(activeDrawable.get(position));
+            }
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     @Override
