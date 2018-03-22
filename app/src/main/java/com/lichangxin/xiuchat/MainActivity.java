@@ -2,6 +2,7 @@ package com.lichangxin.xiuchat;
 
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TabHost;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
         dynamicImageView = findViewById(R.id.dynamic_image);
         encounterImageView = findViewById(R.id.encounter_image);
         chatImageView = findViewById(R.id.chat_image);
+
+        TabLayout tabHost = findViewById(R.id.sub_tab);
+//        tabHost.addTab(tabHost.newTab().setText("111"));
+//        tabHost.addTab(tabHost.newTab().setText("222"));
+//        tabHost.addTab(tabHost.newTab().setText("333"));
+        tabHost.addTab(tabHost.newTab().setIcon(R.drawable.ic_chat));
+        tabHost.addTab(tabHost.newTab().setIcon(R.drawable.ic_chat));
 
         dynamic = inflater.inflate(R.layout.dynamic, null);
         encounter = inflater.inflate(R.layout.encounter, null);
