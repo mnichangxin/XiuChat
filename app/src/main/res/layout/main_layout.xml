@@ -40,17 +40,6 @@
                     android:src="@drawable/ic_chat" />
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-        <!--<TabHost-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"></TabHost>-->
-        <android.support.design.widget.TabLayout
-            android:id="@+id/sub_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </android.support.design.widget.TabLayout>
         <android.support.v4.view.ViewPager
             android:id="@+id/main_view_pager"
             android:layout_width="match_parent"

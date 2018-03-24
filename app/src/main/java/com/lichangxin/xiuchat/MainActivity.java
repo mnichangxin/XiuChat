@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TabHost;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +25,25 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navView;
 
+    // 主界面 ViewPager
     private ViewPager mainViewPager;
-    private ArrayList<View> viewList;
+    private ArrayList<View> mainViewList;
     private View dynamic;
     private View encounter;
     private View chat;
-
     private ArrayList<ImageView> imageViewList;
     private ImageView dynamicImageView;
     private ImageView encounterImageView;
     private ImageView chatImageView;
-
     private ArrayList<Integer> primaryDrawable;
     private ArrayList<Integer> activeDrawable;
+
+    // 动态 ViewPager
+    private ViewPager dynamicViewPager;
+    private ArrayList<View> dynamicViewList;
+    private View share;
+    private View interest;
+    private View story;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,33 +57,23 @@ public class MainActivity extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);
 
         mainViewPager = findViewById(R.id.main_view_pager);
-        dynamic = findViewById(R.id.dynamic);
-        encounter = findViewById(R.id.encounter);
-        chat = findViewById(R.id.chat);
 
         dynamicImageView = findViewById(R.id.dynamic_image);
         encounterImageView = findViewById(R.id.encounter_image);
         chatImageView = findViewById(R.id.chat_image);
 
-        TabLayout tabHost = findViewById(R.id.sub_tab);
-//        tabHost.addTab(tabHost.newTab().setText("111"));
-//        tabHost.addTab(tabHost.newTab().setText("222"));
-//        tabHost.addTab(tabHost.newTab().setText("333"));
-        tabHost.addTab(tabHost.newTab().setIcon(R.drawable.ic_chat));
-        tabHost.addTab(tabHost.newTab().setIcon(R.drawable.ic_chat));
-
         dynamic = inflater.inflate(R.layout.dynamic, null);
         encounter = inflater.inflate(R.layout.encounter, null);
         chat = inflater.inflate(R.layout.chat, null);
 
-        viewList = new ArrayList<>();
+        mainViewList = new ArrayList<>();
         imageViewList = new ArrayList<>();
         primaryDrawable = new ArrayList<>();
         activeDrawable = new ArrayList<>();
 
-        viewList.add(dynamic);
-        viewList.add(encounter);
-        viewList.add(chat);
+        mainViewList.add(dynamic);
+        mainViewList.add(encounter);
+        mainViewList.add(chat);
 
         imageViewList.add(dynamicImageView);
         imageViewList.add(encounterImageView);
@@ -111,11 +106,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 设置主 ViewPager
-        mainViewPager.setAdapter(new ViewPagerAdapter(viewList));
+        // 设置主界面 ViewPager
+        mainViewPager.setAdapter(new ViewPagerAdapter(mainViewList));
         mainViewPager.setCurrentItem(0);
-
         imageViewList.get(0).setImageResource(activeDrawable.get(0));
+
+        // 设置动态 ViewPager
+        View dynamicLayout = LayoutInflater.from(this).inflate(R.layout.dynamic, null);
+//        setContentView(dynamicLayout);
+
+        dynamicViewPager = dynamicLayout.findViewById(R.id.dynamic_view_pager);
+
+        share = inflater.inflate(R.layout.share, null);
+        interest = inflater.inflate(R.layout.interest, null);
+        story = inflater.inflate(R.layout.story, null);
+
+        dynamicViewList = new ArrayList<>();
+        dynamicViewList.add(share);
+        dynamicViewList.add(interest);
+        dynamicViewList.add(story);
+
+        dynamicViewPager.setAdapter(new ViewPagerAdapter(dynamicViewList));
+        dynamicViewPager.setCurrentItem(0);
 
         // 设置滑动事件
         mainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
