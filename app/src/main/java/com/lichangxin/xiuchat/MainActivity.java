@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -113,9 +114,8 @@ public class MainActivity extends AppCompatActivity {
 
         // 设置动态 ViewPager
         View dynamicLayout = LayoutInflater.from(this).inflate(R.layout.dynamic, null);
-//        setContentView(dynamicLayout);
-
         dynamicViewPager = dynamicLayout.findViewById(R.id.dynamic_view_pager);
+        TabLayout tabLayout = dynamicLayout.findViewById(R.id.dynamic_tab);
 
         share = inflater.inflate(R.layout.share, null);
         interest = inflater.inflate(R.layout.interest, null);
@@ -128,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
 
         dynamicViewPager.setAdapter(new ViewPagerAdapter(dynamicViewList));
         dynamicViewPager.setCurrentItem(0);
+
+        tabLayout.setupWithViewPager(dynamicViewPager);
+
 
         // 设置滑动事件
         mainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
