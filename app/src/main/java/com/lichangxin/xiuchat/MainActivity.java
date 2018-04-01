@@ -1,8 +1,6 @@
 package com.lichangxin.xiuchat;
 
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,13 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView chatImageView;
     private ArrayList<Integer> primaryDrawable;
     private ArrayList<Integer> activeDrawable;
-
-    // 动态 ViewPager
-    private ViewPager dynamicViewPager;
-    private ArrayList<View> dynamicViewList;
-    private View share;
-    private View interest;
-    private View story;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,26 +101,6 @@ public class MainActivity extends AppCompatActivity {
         mainViewPager.setAdapter(new ViewPagerAdapter(mainViewList));
         mainViewPager.setCurrentItem(0);
         imageViewList.get(0).setImageResource(activeDrawable.get(0));
-
-        // 设置动态 ViewPager
-        View dynamicLayout = LayoutInflater.from(this).inflate(R.layout.dynamic, null);
-        dynamicViewPager = dynamicLayout.findViewById(R.id.dynamic_view_pager);
-        TabLayout tabLayout = dynamicLayout.findViewById(R.id.dynamic_tab);
-
-        share = inflater.inflate(R.layout.share, null);
-        interest = inflater.inflate(R.layout.interest, null);
-        story = inflater.inflate(R.layout.story, null);
-
-        dynamicViewList = new ArrayList<>();
-        dynamicViewList.add(share);
-        dynamicViewList.add(interest);
-        dynamicViewList.add(story);
-
-        dynamicViewPager.setAdapter(new ViewPagerAdapter(dynamicViewList));
-        dynamicViewPager.setCurrentItem(0);
-
-        tabLayout.setupWithViewPager(dynamicViewPager);
-
 
         // 设置滑动事件
         mainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
