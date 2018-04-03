@@ -25,12 +25,12 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.main_fragment, null);
 
 //        TextView text_num = view.findViewById(R.id.text_num);
-//
 //        int num = arg.getInt("num");
 //        text_num.setText("Page" + num);
 
+        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+
         ViewPager cateViewPager = view.findViewById(R.id.category_view_pager);
-//        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
 
         Fragment fg1 = new CategoryFragment();
         Fragment fg2 = new CategoryFragment();
@@ -44,6 +44,13 @@ public class MainFragment extends Fragment {
 
         cateViewPager.setAdapter(new FragmentAdapter(getChildFragmentManager(), viewLists));
         cateViewPager.setCurrentItem(0);
+
+        tabLayout.setupWithViewPager(cateViewPager);
+
+
+        tabLayout.getTabAt(0).setText("分享");
+        tabLayout.getTabAt(1).setText("故事");
+        tabLayout.getTabAt(2).setText("兴趣");
 
         return view;
     }
