@@ -12,21 +12,13 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/nav_icon" />
     <TextView
-        android:id="@+id/mail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true"
-        android:text="mnichangxin@163.com"
-        android:textColor="#fff"
-        android:textSize="18sp" />
-    <TextView
         android:id="@+id/username"
+        android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_above="@+id/mail"
-        android:text="mnichangxin"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="lichangxin"
         android:textColor="#fff"
         android:textSize="18sp" />
 </RelativeLayout>
