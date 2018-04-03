@@ -2,8 +2,6 @@ package com.lichangxin.xiuchat;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -18,37 +16,26 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-/* 数据适配器 */
-class FragmentAdapter extends FragmentPagerAdapter {
-    List<Fragment> list;
-
-    public FragmentAdapter(FragmentManager fm, List<Fragment> list) {
-        super(fm);
-        this.list = list;
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        return list.get(position);
-    }
-    @Override
-    public int getCount() {
-        return list.size();
-    }
-}
+import com.lichangxin.xiuchat.utils.FragmentAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView navView;
     private ViewPager mainViewPager;
-    private List<Fragment> viewLists;
     private ArrayList<ImageView> imageViewList;
     private ImageView dynamicImageView;
     private ImageView encounterImageView;
     private ImageView chatImageView;
     private ArrayList<Integer> primaryDrawable;
     private ArrayList<Integer> activeDrawable;
+    private List<Fragment> viewLists;
+    private Fragment dynamic;
+    private Fragment encounter;
+    private Fragment chat;
+    private Bundle dynamicBundle;
+    private Bundle encounterBundle;
+    private Bundle chatBundle;
     private int position;
 
     /*  设置 ViewPager */
@@ -76,22 +63,22 @@ public class MainActivity extends AppCompatActivity {
         activeDrawable.add(R.drawable.ic_encounter_active);
         activeDrawable.add(R.drawable.ic_chat_active);
 
-        // 利用 Bundle 传输数据
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("num", 1);
-        Fragment fg1 = MainFragment.newInstance(bundle1);
+        // 利用 Bundle 传输 Fragment 页码
+        dynamicBundle = new Bundle();
+        dynamicBundle.putInt("page", 1);
+        dynamic = MainFragment.newInstance(dynamicBundle);
 
-        Bundle bundle2 = new Bundle();
-        bundle2.putInt("num", 2);
-        Fragment fg2 = MainFragment.newInstance(bundle2);
+        encounterBundle = new Bundle();
+        encounterBundle.putInt("page", 2);
+        encounter = MainFragment.newInstance(encounterBundle);
 
-        Bundle bundle3 = new Bundle();
-        bundle3.putInt("num", 3);
-        Fragment fg3 = MainFragment.newInstance(bundle3);
+        chatBundle = new Bundle();
+        chatBundle.putInt("page", 3);
+        chat = MainFragment.newInstance(chatBundle);
 
-        viewLists.add(fg1);
-        viewLists.add(fg2);
-        viewLists.add(fg3);
+        viewLists.add(dynamic);
+        viewLists.add(encounter);
+        viewLists.add(chat);
 
         // 设置 ViewPager Adapter
         mainViewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), viewLists));
