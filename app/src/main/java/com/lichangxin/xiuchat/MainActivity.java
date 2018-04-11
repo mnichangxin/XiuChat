@@ -1,5 +1,6 @@
 package com.lichangxin.xiuchat;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,11 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.lichangxin.xiuchat.utils.FragmentAdapter;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView navView;
+    private CircleImageView asideHead;
     private ViewPager mainViewPager;
     private ArrayList<ImageView> imageViewList;
     private ImageView dynamicImageView;
@@ -129,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar =  findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer);
         navView = findViewById(R.id.nav_view);
+        asideHead = navView.getHeaderView(0).findViewById(R.id.aside_head);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -144,6 +149,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 drawerLayout.closeDrawers();
                 return true;
+            }
+        });
+
+        asideHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PersonalActivity.class);
+                startActivity(intent);
             }
         });
     }

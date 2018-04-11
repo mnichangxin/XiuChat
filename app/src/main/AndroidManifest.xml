@@ -17,7 +17,10 @@
         </activity>
         <activity android:name=".ViewSlideActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" android:label=""></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="" />
+        <activity android:name=".PersonalActivity"></activity>
     </application>
 
 </manifest>

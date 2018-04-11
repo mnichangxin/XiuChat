@@ -5,7 +5,7 @@
     android:padding="10dp"
     android:background="?attr/colorPrimary">
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/icon_image"
+        android:id="@+id/aside_head"
         android:layout_marginTop="20dp"
         android:layout_width="70dp"
         android:layout_height="70dp"
