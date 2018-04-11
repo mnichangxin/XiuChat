@@ -47,20 +47,38 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/personal_head"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="关注 0"
-                        android:textSize="16sp"
-                        android:textColor="#fff"/>
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="粉丝 0"
-                        android:textSize="16sp"
-                        android:textColor="#fff"/>
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="关注 0"
+                            android:textSize="16sp"
+                            android:textColor="#fff"/>
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="粉丝 0"
+                            android:textSize="16sp"
+                            android:textColor="#fff"/>
+                    </LinearLayout>
+                    <FrameLayout
+                        android:layout_width="120dp"
+                        android:layout_height="50dp">
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:enabled="false" />
+                        <TextView
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="我的资料" />
+                    </FrameLayout>
                 </LinearLayout>
             </RelativeLayout>
             <android.support.v7.widget.Toolbar
