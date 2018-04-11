@@ -19,8 +19,8 @@ public class PersonalActivity extends AppCompatActivity {
         CollapsingToolbarLayout ctl = findViewById(R.id.personal_bar_layout);
 
         setSupportActionBar(toolbar);
-        ctl.setCollapsedTitleGravity(Gravity.LEFT);
-        ctl.setExpandedTitleGravity(Gravity.CENTER);
+//        ctl.setCollapsedTitleGravity(Gravity.LEFT);
+//        ctl.setExpandedTitleGravity(Gravity.CENTER);
         ctl.setTitle("浮生若梦");
 
         // 设置 ActionBar
