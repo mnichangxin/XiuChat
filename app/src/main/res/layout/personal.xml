@@ -32,13 +32,12 @@
             <RelativeLayout
                 android:layout_marginTop="?attr/actionBarSize"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="parallax">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/personal_head"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/head_2" />
@@ -50,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <LinearLayout
+                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <TextView
@@ -67,17 +67,32 @@
                             android:textColor="#fff"/>
                     </LinearLayout>
                     <FrameLayout
+                        android:layout_marginTop="15dp"
                         android:layout_width="120dp"
-                        android:layout_height="50dp">
+                        android:layout_height="35dp">
                         <Button
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:background="@drawable/shape_personal_edit"
                             android:enabled="false" />
-                        <TextView
+                        <LinearLayout
                             android:layout_gravity="center"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="我的资料" />
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:layout_width="23dp"
+                                android:layout_height="23dp"
+                                android:src="@drawable/ic_edit"/>
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="我的资料"
+                                android:textSize="16sp"
+                                android:textColor="#fff" />
+                        </LinearLayout>
                     </FrameLayout>
                 </LinearLayout>
             </RelativeLayout>
@@ -92,16 +107,28 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:lineSpacingExtra="8dp"
-            android:text="Hello World!"
-            android:padding="10dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.design.widget.TabLayout
+                android:id="@+id/personal_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed"
+                app:tabIndicatorColor="@color/colorPrimary">
+            </android.support.design.widget.TabLayout>
+            <com.lichangxin.xiuchat.utils.WrapContentHeightViewPager
+                android:id="@+id/personal_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.lichangxin.xiuchat.utils.WrapContentHeightViewPager>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
 
