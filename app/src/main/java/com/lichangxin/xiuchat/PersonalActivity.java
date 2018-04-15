@@ -5,17 +5,25 @@ import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import com.lichangxin.xiuchat.utils.FragmentAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class PersonalActivity extends AppCompatActivity {
     private ViewPager personalViewPager;
@@ -77,6 +85,21 @@ public class PersonalActivity extends AppCompatActivity {
 
         setBar();
         setPager();
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder().url("http://10.0.2.2:8080/api/getUserInfo/?_id=5ad0b315fd16063c3052c38a").build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.d("Response:", "Fail");
+            }
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                Log.d("Response:", response.body().string());
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
