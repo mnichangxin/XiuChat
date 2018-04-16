@@ -14,16 +14,16 @@ import android.view.MenuItem;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import com.lichangxin.xiuchat.utils.FragmentAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lichangxin.xiuchat.utils.FragmentAdapter;
 
 public class PersonalActivity extends AppCompatActivity {
     private ViewPager personalViewPager;
@@ -87,7 +87,16 @@ public class PersonalActivity extends AppCompatActivity {
         setPager();
 
         OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url("http://10.0.2.2:8080/api/getUserInfo/?_id=5ad0b315fd16063c3052c38a").build();
+        FormBody formBody = new FormBody.Builder()
+                .add("_id", "5ad0d45ce4f3571e907dc3cf")
+                .add("type", "share")
+                .add("content", "Android 测试测试测试")
+                .add("token", "pa4bcbVQyGnQDxOqR9NR4MWmXSblyrDK")
+                .build();
+        Request request = new Request.Builder()
+                .url("http://10.0.2.2:8080/api/createDynamic")
+                .post(formBody)
+                .build();
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -100,6 +109,7 @@ public class PersonalActivity extends AppCompatActivity {
                 Log.d("Response:", response.body().string());
             }
         });
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

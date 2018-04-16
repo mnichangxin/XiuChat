@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">XiuChat</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <String name="HOST">http://10.0.2.2:8080</String>
 </resources>
