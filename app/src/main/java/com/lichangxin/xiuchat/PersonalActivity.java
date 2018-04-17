@@ -12,18 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.lichangxin.xiuchat.utils.FragmentAdapter;
+import com.lichangxin.xiuchat.utils.NetRequest;
+
+import okhttp3.Request;
 
 public class PersonalActivity extends AppCompatActivity {
     private ViewPager personalViewPager;
@@ -86,30 +83,25 @@ public class PersonalActivity extends AppCompatActivity {
         setBar();
         setPager();
 
-        OkHttpClient okHttpClient = new OkHttpClient();
-        FormBody formBody = new FormBody.Builder()
-                .add("_id", "5ad0d45ce4f3571e907dc3cf")
-                .add("type", "share")
-                .add("content", "Android 测试测试测试")
-                .add("token", "pa4bcbVQyGnQDxOqR9NR4MWmXSblyrDK")
-                .build();
-        Request request = new Request.Builder()
-                .url("http://10.0.2.2:8080/api/createDynamic")
-                .post(formBody)
-                .build();
+        String url = "http://10.0.2.2:8080/api/createDynamic";
 
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        HashMap<String, String> parms = new HashMap<>();
+
+        parms.put("_id", "5ad0d45ce4f3571e907dc3cf");
+        parms.put("type", "share");
+        parms.put("content", "框架测试......");
+        parms.put("token", "pa4bcbVQyGnQDxOqR9NR4MWmXSblyrDK");
+
+        NetRequest.postFormRequest(url, parms, new NetRequest.DataCallBack() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+            public void requestSuccess(String result) throws Exception {
+                Log.d("Response:", result);
+            }
+            @Override
+            public void requestFailure(Request request, IOException e) {
                 Log.d("Response:", "Fail");
             }
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                Log.d("Response:", response.body().string());
-            }
         });
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

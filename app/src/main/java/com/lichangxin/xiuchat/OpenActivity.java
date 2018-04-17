@@ -19,7 +19,7 @@ public class OpenActivity extends AppCompatActivity {
         if (!isOpen) {
             setContentView(R.layout.open_layout);
 
-            Button button = (Button) findViewById(R.id.open_button);
+            Button button = findViewById(R.id.open_button);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -1,10 +1,7 @@
 package com.lichangxin.xiuchat;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,9 +10,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import com.lichangxin.xiuchat.utils.DBOpenHelper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lichangxin.xiuchat.utils.NetRequest;
+import com.lichangxin.xiuchat.utils.ProperTies;
+
+import net.sf.json.JSONObject;
+import okhttp3.Request;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView switchLogin;
@@ -23,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private Boolean switchStatus = false;
+    private String URL = ProperTies.getProperties().getProperty("URL");
 
     // 跳转到主界面
     private void activityToMain() {
@@ -32,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // 登录注册验证
-    private void verify(String username, String password, String type) {
+    private void verify(final String username, final String password, String type) {
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "用户名或密码为空", Toast.LENGTH_SHORT).show();
             return;
@@ -46,63 +53,109 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        DBOpenHelper helper = new DBOpenHelper(LoginActivity.this);
-        SQLiteDatabase db = helper.getWritableDatabase();
+//        DBOpenHelper helper = new DBOpenHelper(LoginActivity.this);
+//        SQLiteDatabase db = helper.getWritableDatabase();
+//
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put("username", username);
+//        contentValues.put("password", password);
+//
+//        Cursor cursor = db.query("user", null, null, null, null, null, null);
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("username", username);
-        contentValues.put("password", password);
+        HashMap<String, String> parms = new HashMap<>();
 
-        Cursor cursor = db.query("user", null, null, null, null, null, null);
+        parms.put("username", username);
+        parms.put("password", password);
 
         switch (type) {
             case "login":
-                Boolean loginSuccess = false;
+                NetRequest.postFormRequest(URL + "/api/login", parms, new NetRequest.DataCallBack() {
+                    @Override
+                    public void requestSuccess(String result) throws Exception {
+                        JSONObject jsonObject = JSONObject.fromObject(result);
 
-                if (cursor.moveToFirst()) {
-                    for (int i = 0; i < cursor.getCount(); i++) {
-                        cursor.moveToPosition(i);
+//                        Gson gson = new Gson();
+//                        Map<String, String> res =  gson.fromJson(result, new TypeToken<Map<String, String>>(){}.getType());
 
-                        if (cursor.getString(1).equals(username) && cursor.getString(2).equals(password)) {
-                            SharedPreferences pf = getSharedPreferences("loginInfo", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = pf.edit();
-                            editor.putString("username", username);
-                            editor.putString("password", password);
-                            editor.commit();
-
-                            loginSuccess = true;
-                            break;
+                        if (jsonObject.get("status").equals("0")) {
+                            Toast.makeText(LoginActivity.this, jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
+//                            SharedPreferences pf = getSharedPreferences("loginInfo", MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = pf.edit();
+//                            editor.putString("username", username);
+//                            editor.putString("password", password);
+//                            editor.putString("token", jsonObject.getJSONObject("data").get("token").toString());
+//                            editor.commit();
                         }
                     }
-                }
-                if (!loginSuccess) {
-                    Toast.makeText(this, "用户名或密码有误", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void requestFailure(Request request, IOException e) {
+                        Toast.makeText(LoginActivity.this, "系统错误，请重试", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                });
 
-                    activityToMain();
-                }
+//                Boolean loginSuccess = false;
+//
+//                if (cursor.moveToFirst()) {
+//                    for (int i = 0; i < cursor.getCount(); i++) {
+//                        cursor.moveToPosition(i);
+//
+//                        if (cursor.getString(1).equals(username) && cursor.getString(2).equals(password)) {
+//                            SharedPreferences pf = getSharedPreferences("loginInfo", MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = pf.edit();
+//                            editor.putString("username", username);
+//                            editor.putString("password", password);
+//                            editor.commit();
+//
+//                            loginSuccess = true;
+//                            break;
+//                        }
+//                    }
+//                }
+//                if (!loginSuccess) {
+//                    Toast.makeText(this, "用户名或密码有误", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+//
+//                    activityToMain();
+//                }
                 break;
             case "register":
-                Boolean regSuccess = true;
-
-                if (cursor.moveToFirst()) {
-                    for (int i = 0; i < cursor.getCount(); i++) {
-                        cursor.moveToPosition(i);
-
-                        if (cursor.getString(1).equals(username)) {
-                            regSuccess = false;
-                            break;
-                        }
+                NetRequest.postFormRequest(URL + "/api/register", parms, new NetRequest.DataCallBack() {
+                    @Override
+                    public void requestSuccess(String result) throws Exception {
+                        Gson gson = new Gson();
+                        Map<String, String> res =  gson.fromJson(result, new TypeToken<Map<String, String>>(){}.getType());
+                        Toast.makeText(LoginActivity.this, res.get("msg"), Toast.LENGTH_SHORT).show();
                     }
-                }
-                if (regSuccess) {
-                    db.insert("user", null, contentValues);
-                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "该用户名已注册过", Toast.LENGTH_SHORT).show();
-                }
-                break;
+                    @Override
+                    public void requestFailure(Request request, IOException e) {
+                        Toast.makeText(LoginActivity.this, "系统错误，请重试", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                });
+
+//                Boolean regSuccess = true;
+//
+//                if (cursor.moveToFirst()) {
+//                    for (int i = 0; i < cursor.getCount(); i++) {
+//                        cursor.moveToPosition(i);
+//
+//                        if (cursor.getString(1).equals(username)) {
+//                            regSuccess = false;
+//                            break;
+//                        }
+//                    }
+//                }
+//                if (regSuccess) {
+//                    db.insert("user", null, contentValues);
+//                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(this, "该用户名已注册过", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
         }
     }
 

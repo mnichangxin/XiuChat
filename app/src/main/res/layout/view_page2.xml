@@ -13,8 +13,8 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@drawable/head_2"
-            app:border_color="#091E2E"
-            app:border_width="1dp" />
+            app:civ_border_color="#091E2E"
+            app:civ_border_width="1dp" />
         <TextView
             android:layout_marginTop="50dp"
             android:layout_gravity="center"
