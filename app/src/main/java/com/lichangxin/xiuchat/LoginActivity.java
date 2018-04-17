@@ -12,15 +12,13 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lichangxin.xiuchat.utils.NetRequest;
 import com.lichangxin.xiuchat.utils.ProperTies;
 
-import net.sf.json.JSONObject;
 import okhttp3.Request;
 
 public class LoginActivity extends AppCompatActivity {
@@ -53,15 +51,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-//        DBOpenHelper helper = new DBOpenHelper(LoginActivity.this);
-//        SQLiteDatabase db = helper.getWritableDatabase();
-//
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("username", username);
-//        contentValues.put("password", password);
-//
-//        Cursor cursor = db.query("user", null, null, null, null, null, null);
-
         HashMap<String, String> parms = new HashMap<>();
 
         parms.put("username", username);
@@ -72,21 +61,22 @@ public class LoginActivity extends AppCompatActivity {
                 NetRequest.postFormRequest(URL + "/api/login", parms, new NetRequest.DataCallBack() {
                     @Override
                     public void requestSuccess(String result) throws Exception {
-                        JSONObject jsonObject = JSONObject.fromObject(result);
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
 
-//                        Gson gson = new Gson();
-//                        Map<String, String> res =  gson.fromJson(result, new TypeToken<Map<String, String>>(){}.getType());
+                        if (jsonObject.get("status").getAsString().equals("0")) {
+                            Toast.makeText(LoginActivity.this, jsonObject.get("msg").getAsString(), Toast.LENGTH_SHORT).show();
+                        } else if (jsonObject.get("status").getAsString().equals("1")) {
+                            SharedPreferences pf = getSharedPreferences("loginInfo", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pf.edit();
+                            editor.putString("username", username);
+                            editor.putString("password", password);
+                            editor.putString("token", jsonObject.get("data").getAsJsonObject().get("token").getAsString());
+                            editor.commit();
 
-                        if (jsonObject.get("status").equals("0")) {
-                            Toast.makeText(LoginActivity.this, jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
+                            activityToMain();
                         } else {
-                            Toast.makeText(LoginActivity.this, jsonObject.get("msg").toString(), Toast.LENGTH_SHORT).show();
-//                            SharedPreferences pf = getSharedPreferences("loginInfo", MODE_PRIVATE);
-//                            SharedPreferences.Editor editor = pf.edit();
-//                            editor.putString("username", username);
-//                            editor.putString("password", password);
-//                            editor.putString("token", jsonObject.getJSONObject("data").get("token").toString());
-//                            editor.commit();
+                            Toast.makeText(LoginActivity.this, "网络错误，请重试", Toast.LENGTH_SHORT).show();
                         }
                     }
                     @Override
@@ -95,40 +85,15 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 });
-
-//                Boolean loginSuccess = false;
-//
-//                if (cursor.moveToFirst()) {
-//                    for (int i = 0; i < cursor.getCount(); i++) {
-//                        cursor.moveToPosition(i);
-//
-//                        if (cursor.getString(1).equals(username) && cursor.getString(2).equals(password)) {
-//                            SharedPreferences pf = getSharedPreferences("loginInfo", MODE_PRIVATE);
-//                            SharedPreferences.Editor editor = pf.edit();
-//                            editor.putString("username", username);
-//                            editor.putString("password", password);
-//                            editor.commit();
-//
-//                            loginSuccess = true;
-//                            break;
-//                        }
-//                    }
-//                }
-//                if (!loginSuccess) {
-//                    Toast.makeText(this, "用户名或密码有误", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-//
-//                    activityToMain();
-//                }
                 break;
             case "register":
                 NetRequest.postFormRequest(URL + "/api/register", parms, new NetRequest.DataCallBack() {
                     @Override
                     public void requestSuccess(String result) throws Exception {
-                        Gson gson = new Gson();
-                        Map<String, String> res =  gson.fromJson(result, new TypeToken<Map<String, String>>(){}.getType());
-                        Toast.makeText(LoginActivity.this, res.get("msg"), Toast.LENGTH_SHORT).show();
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
+
+                        Toast.makeText(LoginActivity.this, jsonObject.get("msg").getAsString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void requestFailure(Request request, IOException e) {
@@ -136,26 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 });
-
-//                Boolean regSuccess = true;
-//
-//                if (cursor.moveToFirst()) {
-//                    for (int i = 0; i < cursor.getCount(); i++) {
-//                        cursor.moveToPosition(i);
-//
-//                        if (cursor.getString(1).equals(username)) {
-//                            regSuccess = false;
-//                            break;
-//                        }
-//                    }
-//                }
-//                if (regSuccess) {
-//                    db.insert("user", null, contentValues);
-//                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(this, "该用户名已注册过", Toast.LENGTH_SHORT).show();
-//                }
-//                break;
+                break;
         }
     }
 
@@ -195,11 +141,11 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!switchStatus) {
-                    verify(username.getText().toString(), password.getText().toString(), "login");
-                } else {
-                    verify(username.getText().toString(), password.getText().toString(), "register");
-                }
+            if (!switchStatus) {
+                verify(username.getText().toString(), password.getText().toString(), "login");
+            } else {
+                verify(username.getText().toString(), password.getText().toString(), "register");
+            }
             }
         });
     }

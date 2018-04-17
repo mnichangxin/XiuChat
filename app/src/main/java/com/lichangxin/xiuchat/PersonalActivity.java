@@ -9,18 +9,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.lichangxin.xiuchat.utils.FragmentAdapter;
-import com.lichangxin.xiuchat.utils.NetRequest;
-
-import okhttp3.Request;
 
 public class PersonalActivity extends AppCompatActivity {
     private ViewPager personalViewPager;
@@ -30,6 +24,11 @@ public class PersonalActivity extends AppCompatActivity {
     private Bundle dynamicBundle;
     private Bundle aboutBundle;
     private TabLayout personalTabLayout;
+
+    private String nickname;
+    private int following_num;
+    private int followed_num;
+
 
     /* 设置 ViewPager */
     private void setPager() {
@@ -82,26 +81,6 @@ public class PersonalActivity extends AppCompatActivity {
 
         setBar();
         setPager();
-
-        String url = "http://10.0.2.2:8080/api/createDynamic";
-
-        HashMap<String, String> parms = new HashMap<>();
-
-        parms.put("_id", "5ad0d45ce4f3571e907dc3cf");
-        parms.put("type", "share");
-        parms.put("content", "框架测试......");
-        parms.put("token", "pa4bcbVQyGnQDxOqR9NR4MWmXSblyrDK");
-
-        NetRequest.postFormRequest(url, parms, new NetRequest.DataCallBack() {
-            @Override
-            public void requestSuccess(String result) throws Exception {
-                Log.d("Response:", result);
-            }
-            @Override
-            public void requestFailure(Request request, IOException e) {
-                Log.d("Response:", "Fail");
-            }
-        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
