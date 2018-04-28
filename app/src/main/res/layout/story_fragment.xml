@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,13 +26,11 @@
                 android:textSize="18sp"
                 android:textColor="#000" />
         </LinearLayout>
-        <TextView
+        <VideoView
+            android:id="@+id/video_view"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="21321431414dadafaewafafafafafaafererearerarar32132132131233213213113123333333313231312313213131313"
-            android:textSize="18sp"
-            android:textColor="#000" />
+            android:layout_height="wrap_content" />
         <View
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -43,22 +40,6 @@
             android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_forward" />
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="16sp" />
-            </LinearLayout>
             <LinearLayout
                 android:gravity="center"
                 android:layout_weight="1"
@@ -95,7 +76,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,13 +97,10 @@
                 android:textSize="18sp"
                 android:textColor="#000" />
         </LinearLayout>
-        <TextView
+        <VideoView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="21321431414dadafaewafafafafafaafererearerarar32132132131233213213113123333333313231312313213131313"
-            android:textSize="18sp"
-            android:textColor="#000" />
+            android:layout_height="wrap_content" />
         <View
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -133,22 +110,6 @@
             android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_forward" />
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="16sp" />
-            </LinearLayout>
             <LinearLayout
                 android:gravity="center"
                 android:layout_weight="1"
@@ -185,7 +146,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -207,13 +167,10 @@
                 android:textSize="18sp"
                 android:textColor="#000" />
         </LinearLayout>
-        <TextView
+        <VideoView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="21321431414dadafaewafafafafafaafererearerarar32132132131233213213113123333333313231312313213131313"
-            android:textSize="18sp"
-            android:textColor="#000" />
+            android:layout_height="wrap_content" />
         <View
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -223,22 +180,6 @@
             android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_forward" />
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="16sp" />
-            </LinearLayout>
             <LinearLayout
                 android:gravity="center"
                 android:layout_weight="1"
@@ -273,15 +214,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:padding="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_gravity="right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_send"
-        app:backgroundTint="@color/colorPrimaryDark"
-        app:elevation="2dp"
-        app:pressedTranslationZ="10dp" />
 </LinearLayout>

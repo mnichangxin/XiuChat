@@ -22,11 +22,6 @@ public class MainFragment extends Fragment {
     private Fragment interest;
     private Fragment encounter;
     private Fragment community;
-    private Bundle shareBundle;
-    private Bundle storyBundle;
-    private Bundle interestBundle;
-    private Bundle encounterBundle;
-    private Bundle communityBundle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,29 +40,16 @@ public class MainFragment extends Fragment {
         int page = args.getInt("page");
 
         if (page == 1) {
-            shareBundle = new Bundle();
-            shareBundle.putString("category", "share");
-            share = CategoryFragment.newInstance(shareBundle);
-
-            storyBundle = new Bundle();
-            storyBundle.putString("category", "story");
-            story = CategoryFragment.newInstance(shareBundle);
-
-            interestBundle = new Bundle();
-            interestBundle.putString("category", "interest");
-            interest = CategoryFragment.newInstance(shareBundle);
+            share = new ShareFragment();
+            story = new StoryFragment();
+            interest = new InterestFragment();
 
             viewLists.add(share);
             viewLists.add(story);
             viewLists.add(interest);
         } else if (page == 2) {
-            encounterBundle = new Bundle();
-            encounterBundle.putString("category", "encounter");
-            encounter = CategoryFragment.newInstance(encounterBundle);
-
-            communityBundle = new Bundle();
-            communityBundle.putString("category", "community");
-            community = CategoryFragment.newInstance(communityBundle);
+            encounter = new EncounterFragment();
+            community = new CommunityFragment();
 
             viewLists.add(encounter);
             viewLists.add(community);
