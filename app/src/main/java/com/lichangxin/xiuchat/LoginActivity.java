@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = pf.edit();
                             editor.putString("username", username);
                             editor.putString("password", password);
+                            editor.putString("_id", jsonObject.get("data").getAsJsonObject().get("_id").getAsString());
                             editor.putString("token", jsonObject.get("data").getAsJsonObject().get("token").getAsString());
                             editor.commit();
 

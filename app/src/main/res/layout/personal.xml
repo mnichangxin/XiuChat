@@ -53,12 +53,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:id="@+id/personal_following_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="关注 0"
                             android:textSize="16sp"
                             android:textColor="#fff"/>
                         <TextView
+                            android:id="@+id/personal_followed_num"
                             android:layout_marginLeft="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -76,6 +78,7 @@
                             android:background="@drawable/shape_personal_edit"
                             android:enabled="false" />
                         <LinearLayout
+                            android:id="@+id/edit_info"
                             android:layout_gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
@@ -106,29 +109,47 @@
                 app:layout_collapseMode="pin" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <LinearLayout
+        <android.support.design.widget.TabLayout
+            android:id="@+id/personal_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <android.support.design.widget.TabLayout
-                android:id="@+id/personal_tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabMode="fixed"
-                app:tabIndicatorColor="@color/colorPrimary">
-            </android.support.design.widget.TabLayout>
-            <com.lichangxin.xiuchat.utils.WrapContentHeightViewPager
-                android:id="@+id/personal_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </com.lichangxin.xiuchat.utils.WrapContentHeightViewPager>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+            app:tabMode="fixed"
+            app:tabIndicatorColor="@color/colorPrimary" />
+        <com.lichangxin.xiuchat.utils.WrapContentHeightViewPager
+            android:id="@+id/personal_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.lichangxin.xiuchat.utils.WrapContentHeightViewPager>
+    </LinearLayout>
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:id="@+id/nestedScrollView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:fillViewport="true"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+            <!--<android.support.design.widget.TabLayout-->
+                <!--android:id="@+id/personal_tab_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:tabMode="fixed"-->
+                <!--app:tabIndicatorColor="@color/colorPrimary" />-->
+            <!--<com.lichangxin.xiuchat.utils.WrapContentHeightViewPager-->
+                <!--android:id="@+id/personal_view_pager"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+            <!--</com.lichangxin.xiuchat.utils.WrapContentHeightViewPager>-->
+        <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
 </android.support.design.widget.CoordinatorLayout>
 

@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/nav_icon" />
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/drawer_nickname"
         android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,18 +10,26 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lichangxin.xiuchat.utils.FragmentAdapter;
+import com.lichangxin.xiuchat.utils.Global;
+import com.lichangxin.xiuchat.utils.NetRequest;
 import com.lichangxin.xiuchat.utils.ProperTies;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Request;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -43,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private Bundle encounterBundle;
     private Bundle chatBundle;
     private int position;
+    private JsonObject userInfo;
+    private String URL = ProperTies.getProperties().getProperty("URL");
 
     /*  设置 ViewPager */
     private void setPager() {
@@ -158,7 +168,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, PersonalActivity.class);
+                intent.putExtra("userInfo", userInfo.toString());
                 startActivity(intent);
+            }
+        });
+    }
+
+    /* 请求数据 */
+    private void request() {
+        HashMap<String, String> parms = new HashMap<>();
+        parms.put("_id", new Global(MainActivity.this).getId());
+
+        NetRequest.getFormRequest(URL + "/api/getUserInfo", parms, new NetRequest.DataCallBack() {
+            @Override
+            public void requestSuccess(String result) throws Exception {
+                JsonParser jsonParser = new JsonParser();
+                JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
+
+                if (jsonObject.get("status").getAsInt() == 1) {
+                    userInfo = jsonObject.get("data").getAsJsonObject();
+
+                    TextView drawer_nickname = findViewById(R.id.drawer_nickname);
+                    drawer_nickname.setText(userInfo.get("nickname").getAsString());
+                } else {
+                    Toast.makeText(MainActivity.this, "用户不存在", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void requestFailure(Request request, IOException e) {
+                Toast.makeText(MainActivity.this, "网络错误，请重试", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -178,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
+                request();
                 break;
         }
         return true;
