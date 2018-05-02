@@ -1,6 +1,8 @@
 package com.lichangxin.xiuchat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,6 +54,18 @@ public class ShareFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private List<String> dataLists;
 
+    private void sendDynamic(View view) {
+        FloatingActionButton floatingActionButton = view.findViewById(R.id.float_action_button);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SendDynamicActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.share_fragment, container, false);
@@ -66,6 +80,8 @@ public class ShareFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new RecyclerAdapter());
+
+        sendDynamic(view);
 
         return view;
     }

@@ -10,7 +10,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/nav_icon" />
+        android:src="@drawable/head_2" />
     <TextView
         android:id="@+id/drawer_nickname"
         android:layout_marginBottom="20dp"
