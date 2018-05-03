@@ -38,6 +38,7 @@ public class PersonalActivity extends AppCompatActivity {
 
         dynamicBundle = new Bundle();
         dynamicBundle.putInt("page", 1);
+        dynamicBundle.putString("userInfo", userInfo.toString());
         dynamic = PersonalFragment.newInstance(dynamicBundle);
 
         aboutBundle = new Bundle();

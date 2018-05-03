@@ -28,6 +28,7 @@
                 android:textColor="#000" />
         </LinearLayout>
         <TextView
+            android:id="@+id/share_content"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_comment" />
                 <TextView
+                    android:id="@+id/share_commit"
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_fav" />
                 <TextView
+                    android:id="@+id/share_fav"
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.lichangxin.xiuchat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,49 +11,58 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.lichangxin.xiuchat.utils.NetRequest;
+import com.lichangxin.xiuchat.utils.ProperTies;
+import com.lichangxin.xiuchat.utils.RecyclerAdapter;
 
-class ViewHolder extends RecyclerView.ViewHolder {
-    public TextView textView;
+import org.json.JSONArray;
 
-    public ViewHolder(View itemView) {
-        super(itemView);
+import java.io.IOException;
 
-        textView = itemView.findViewById(R.id.share_nickname);
+import okhttp3.Request;
+
+class ShareRecyclerAdapter extends RecyclerAdapter {
+    private JsonArray userDynamic;
+    private TextView nickname;
+    private TextView content;
+    private TextView commit;
+    private TextView fav;
+
+    public ShareRecyclerAdapter(int layout, JsonArray userDynamic) {
+        super(layout);
+
+        this.userDynamic = userDynamic;
     }
-}
-
-class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
-    private List<String> dataLists;
-
-//    public RecyclerAdapter(List<String> dataLists) {
-//        this.dataLists = dataLists;
-//    }
-
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.share_fragment_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+    public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
+        nickname = holder.itemView.findViewById(R.id.share_nickname);
+        content = holder.itemView.findViewById(R.id.share_content);
+        commit = holder.itemView.findViewById(R.id.share_commit);
+        fav = holder.itemView.findViewById(R.id.share_fav);
 
-        return viewHolder;
-    }
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-//        holder.textView.setText(dataLists.get(position));
-        holder.textView.setText("NickName");
+        JsonObject jsonObject = userDynamic.get(position).getAsJsonObject();
+
+        nickname.setText(jsonObject.get("nickname").getAsString());
+        content.setText(jsonObject.get("share").getAsString());
+        commit.setText(jsonObject.get("commit").getAsJsonArray().size() + "");
+        fav.setText(jsonObject.get("fav").getAsString());
     }
     @Override
     public int getItemCount() {
-        return 10;
+        return userDynamic.size();
     }
 }
 
 public class ShareFragment extends Fragment {
+    private String URL;
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private List<String> dataLists;
 
     private void sendDynamic(View view) {
         FloatingActionButton floatingActionButton = view.findViewById(R.id.float_action_button);
@@ -70,16 +80,29 @@ public class ShareFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.share_fragment, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerview);
+        URL = ProperTies.getProperties().getProperty("URL");
+
+        recyclerView = view.findViewById(R.id.share_recyclerview);
         layoutManager = new LinearLayoutManager(getContext());
 
-        dataLists = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            dataLists.add("Item" + i);
-        }
+        NetRequest.getFormRequest(URL + "/api/getAllUserDynamic", null, new NetRequest.DataCallBack() {
+            @Override
+            public void requestSuccess(String result) throws Exception {
+                JsonParser jsonParser = new JsonParser();
+                JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
 
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new RecyclerAdapter());
+                if (jsonObject.get("status").getAsInt() == 1) {
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(new ShareRecyclerAdapter(R.layout.share_fragment_item, jsonObject.get("data").getAsJsonArray()));
+                } else {
+                    Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void requestFailure(Request request, IOException e) {
+                Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         sendDynamic(view);
 
