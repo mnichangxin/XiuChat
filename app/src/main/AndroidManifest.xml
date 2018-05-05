@@ -25,7 +25,8 @@
             android:label="" />
         <activity android:name=".PersonalActivity" />
         <activity android:name=".EditInfoActivity" />
-        <activity android:name=".SendDynamicActivity"></activity>
+        <activity android:name=".SendDynamicActivity" />
+        <activity android:name=".ShareDetailActivity"></activity>
     </application>
 
 </manifest>

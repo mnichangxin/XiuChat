@@ -23,7 +23,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="浮生若梦"
+                android:text="..."
                 android:textSize="18sp"
                 android:textColor="#000" />
         </LinearLayout>
@@ -32,7 +32,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="21321431414dadafaewafafafafafaafererearerarar32132132131233213213113123333333313231312313213131313"
+            android:text="..."
             android:textSize="18sp"
             android:textColor="#000" />
         <View
@@ -61,11 +61,13 @@
                     android:textSize="16sp" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/commit_active"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:id="@+id/commit_active_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_comment" />
@@ -78,11 +80,13 @@
                     android:textSize="16sp" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/fav_active"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:id="@+id/fav_active_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_fav" />
