@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="邂逅本来就是场缘分"
+            android:text="邂逅就是场缘分"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#fff" />

@@ -67,14 +67,18 @@ class ShareRecyclerAdapter extends RecyclerAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ShareDetailActivity.class);
-                intent.putExtra("user_id", jsonObject.get("_id").getAsString());
+                intent.putExtra("userId", jsonObject.get("_id").getAsString());
+                intent.putExtra("isCommit", false);
                 context.startActivity(intent);
             }
         });
         activeCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, ShareDetailActivity.class);
+                intent.putExtra("userId", jsonObject.get("_id").getAsString());
+                intent.putExtra("isCommit", true);
+                context.startActivity(intent);
             }
         });
         activeFav.setOnClickListener(new View.OnClickListener() {

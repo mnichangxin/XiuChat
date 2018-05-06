@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我来到你的城市"
+            android:text="寻找那份珍贵"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#fff" />
