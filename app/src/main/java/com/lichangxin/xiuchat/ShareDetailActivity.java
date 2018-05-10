@@ -114,7 +114,7 @@ public class ShareDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_detail_layout);
 
-        URL = URL = ProperTies.getProperties().getProperty("URL");
+        URL = ProperTies.getProperties().getProperty("URL");
 
         userId = getIntent().getStringExtra("userId");
         isCommit = getIntent().getBooleanExtra("isCommit", true);

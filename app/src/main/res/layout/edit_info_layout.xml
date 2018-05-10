@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="昵称："
                 android:textSize="18sp"
-                android:textColor="#0B1D40" />
+                android:textColor="#5c5c5c" />
             <EditText
                 android:id="@+id/edit_nickname"
                 android:padding="10dp"
@@ -42,7 +42,7 @@
                 android:background="@null"
                 android:drawableBottom="@drawable/shape_edit_bottom_line"
                 android:textSize="18sp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#5c5c5c"
                 android:inputType="text" />
         </LinearLayout>
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="生日："
                 android:textSize="18sp"
-                android:textColor="#0B1D40" />
+                android:textColor="#5c5c5c" />
             <EditText
                 android:id="@+id/edit_birthday"
                 android:padding="10dp"
@@ -66,7 +66,7 @@
                 android:background="@null"
                 android:drawableBottom="@drawable/shape_edit_bottom_line"
                 android:textSize="18sp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#5c5c5c"
                 android:inputType="date" />
         </LinearLayout>
         <LinearLayout
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:text="性别："
                 android:textSize="18sp"
-                android:textColor="#0B1D40" />
+                android:textColor="#5c5c5c" />
             <EditText
                 android:id="@+id/edit_sex"
                 android:padding="10dp"
@@ -90,7 +90,7 @@
                 android:background="@null"
                 android:drawableBottom="@drawable/shape_edit_bottom_line"
                 android:textSize="18sp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#5c5c5c"
                 android:inputType="text" />
         </LinearLayout>
         <LinearLayout
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:text="地区："
                 android:textSize="18sp"
-                android:textColor="#0B1D40" />
+                android:textColor="#5c5c5c" />
             <EditText
                 android:id="@+id/edit_area"
                 android:padding="10dp"
@@ -114,7 +114,7 @@
                 android:background="@null"
                 android:drawableBottom="@drawable/shape_edit_bottom_line"
                 android:textSize="18sp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#5c5c5c"
                 android:inputType="text" />
         </LinearLayout>
         <LinearLayout
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:text="签名："
                 android:textSize="18sp"
-                android:textColor="#0B1D40" />
+                android:textColor="#5c5c5c" />
             <EditText
                 android:id="@+id/edit_signature"
                 android:padding="10dp"
@@ -138,7 +138,7 @@
                 android:background="@null"
                 android:drawableBottom="@drawable/shape_edit_bottom_line"
                 android:textSize="18sp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#5c5c5c"
                 android:inputType="text" />
         </LinearLayout>
         <RelativeLayout
@@ -156,7 +156,7 @@
                     android:text="保存"
                     android:textSize="18sp"
                     android:textColor="#fff"
-                    android:background="@drawable/shape_button1_radius" />
+                    android:background="@drawable/shape_commit_button" />
                 <Button
                     android:id="@+id/edit_cancel"
                     android:layout_marginLeft="20dp"
@@ -165,7 +165,7 @@
                     android:text="取消"
                     android:textSize="18sp"
                     android:textColor="#fff"
-                    android:background="@drawable/shape_button1_radius" />
+                    android:background="@drawable/shape_commit_button" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

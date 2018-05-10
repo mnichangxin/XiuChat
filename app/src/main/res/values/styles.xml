@@ -14,7 +14,7 @@
         <!-- 背景透明 -->
         <item name="android:windowBackground">@color/colorPrimaryDark</item>
 
-        <!-- 无标题 -->
+        <!-- 无标题 -->zz
         <item name="android:windowNoTitle">true</item>
 
         <!-- 是否浮现在activity之上 -->
