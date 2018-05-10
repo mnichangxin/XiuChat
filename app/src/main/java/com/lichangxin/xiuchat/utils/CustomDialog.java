@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.lichangxin.xiuchat.R;
@@ -30,6 +31,11 @@ public class CustomDialog extends Dialog {
      */
     protected Button doubleRightBtn;
 
+    /**
+     * 输入框
+     */
+    protected EditText editText;
+
     public CustomDialog(Context context) {
         super(context, R.style.CustomDialogStyle);
     }
@@ -45,6 +51,7 @@ public class CustomDialog extends Dialog {
         hintTv = findViewById(R.id.tv_common_dialog_hint);
         doubleLeftBtn = findViewById(R.id.btn_common_dialog_double_left);
         doubleRightBtn = findViewById(R.id.btn_common_dialog_double_right);
+        editText = findViewById(R.id.dialog_edit_text);
     }
 
     @Override
@@ -93,13 +100,10 @@ public class CustomDialog extends Dialog {
     }
 
     /**
-     * 给两个按钮 设置文字
+     * 获取 Edit 内容
      *
-     * @param leftStr 左按钮文字
-     * @param rightStr 右按钮文字
      */
-    public void setBtnText(String leftStr, String rightStr) {
-        doubleLeftBtn.setText(leftStr);
-        doubleRightBtn.setText(rightStr);
+    public String getEdit() {
+        return editText.getText().toString();
     }
 }

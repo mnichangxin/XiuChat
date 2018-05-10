@@ -22,6 +22,7 @@
 
     <!-- 输入框 -->
     <EditText
+        android:id="@+id/dialog_edit_text"
         android:layout_marginTop="20dp"
         android:padding="10dp"
         android:layout_width="match_parent"

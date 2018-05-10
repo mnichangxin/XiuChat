@@ -13,6 +13,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lichangxin.xiuchat.utils.CustomDialog;
+import com.lichangxin.xiuchat.utils.Global;
 import com.lichangxin.xiuchat.utils.NetRequest;
 import com.lichangxin.xiuchat.utils.ProperTies;
 
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import okhttp3.Request;
 
 public class ShareDetailActivity extends AppCompatActivity {
-    private String userId;
+    private String dynamicId;
     private Boolean isCommit;
     private TextView nickname;
     private TextView content;
@@ -56,7 +57,7 @@ public class ShareDetailActivity extends AppCompatActivity {
 
         HashMap<String, String> parm = new HashMap<>();
 
-        parm.put("_id", userId);
+        parm.put("_id", dynamicId);
 
         NetRequest.getFormRequest(URL + "/api/getDynamicDetail", parm, new NetRequest.DataCallBack() {
             @Override
@@ -102,9 +103,31 @@ public class ShareDetailActivity extends AppCompatActivity {
         dialog.setRightButton("评论", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                HashMap<String, String> parm = new HashMap<>();
 
-                Toast.makeText(ShareDetailActivity.this, "评论成功", Toast.LENGTH_SHORT).show();
+                parm.put("_id", new Global(getApplicationContext()).getId());
+                parm.put("token", new Global(getApplicationContext()).getToken());
+                parm.put("dynamic_id", dynamicId);
+                parm.put("content", dialog.getEdit());
+
+                NetRequest.postFormRequest(URL + "/api/commitDynamic", parm, new NetRequest.DataCallBack() {
+                    @Override
+                    public void requestSuccess(String result) throws Exception {
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
+
+                        if (jsonObject.get("status").getAsInt() == 1) {
+                            Toast.makeText(ShareDetailActivity.this, "评论成功", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(ShareDetailActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void requestFailure(Request request, IOException e) {
+                        Toast.makeText(ShareDetailActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
@@ -116,7 +139,7 @@ public class ShareDetailActivity extends AppCompatActivity {
 
         URL = ProperTies.getProperties().getProperty("URL");
 
-        userId = getIntent().getStringExtra("userId");
+        dynamicId = getIntent().getStringExtra("dynamicId");
         isCommit = getIntent().getBooleanExtra("isCommit", true);
 
         setBar();
