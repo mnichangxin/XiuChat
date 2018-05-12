@@ -18,23 +18,28 @@
                 android:layout_height="50dp"
                 android:src="@drawable/head_1" />
             <TextView
-                android:id="@+id/share_nickname"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="..."
+                android:text="浮生若梦"
                 android:textSize="18sp"
                 android:textColor="#000" />
         </LinearLayout>
-        <TextView
-            android:id="@+id/share_content"
+        <!--<RelativeLayout-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp">-->
+            <!--<VideoView-->
+                <!--android:id="@+id/video_view"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent" />-->
+        <!--</RelativeLayout>-->
+        <org.lynxz.zzplayerlibrary.widget.VideoPlayer
+            android:id="@+id/video_view"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="..."
-            android:textSize="18sp"
-            android:textColor="#000" />
+            android:layout_height="200dp"/>
         <View
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -45,37 +50,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
-                android:id="@+id/forward_active"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:id="@+id/forward_active_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_forward" />
-                <TextView
-                    android:id="@+id/share_forward"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="16sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/commit_active"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/commit_active_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_comment" />
                 <TextView
-                    android:id="@+id/share_commit"
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,18 +66,15 @@
                     android:textSize="16sp" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/fav_active"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:id="@+id/fav_active_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_fav" />
                 <TextView
-                    android:id="@+id/share_fav"
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

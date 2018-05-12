@@ -89,6 +89,7 @@
                         android:text="转发"
                         android:textSize="18sp" />
                     <TextView
+                        android:id="@+id/share_detail_forward"
                         android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -118,6 +119,10 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#ccc"/>
+            android:background="#ccc" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/commit_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

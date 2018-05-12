@@ -100,6 +100,16 @@ public class CustomDialog extends Dialog {
     }
 
     /**
+     * 设置 Edit 是否可见
+     *
+     */
+    public void setEditVisibility(Boolean visibility) {
+        if (!visibility) {
+            editText.setVisibility(View.GONE);
+        }
+    }
+
+    /**
      * 获取 Edit 内容
      *
      */
