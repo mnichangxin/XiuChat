@@ -1,22 +1,62 @@
 package com.lichangxin.xiuchat;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.lichangxin.xiuchat.utils.RecyclerAdapter;
 
-import org.lynxz.zzplayerlibrary.widget.VideoPlayer;
+import java.util.HashMap;
+
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 class StoryRecyclerAdapter extends RecyclerAdapter {
     private Context context;
-    private VideoPlayer videoPlayer;
+    private ImageView imageView;
+    private JCVideoPlayerStandard jcVideoPlayerStandard;
+
+    private Bitmap getVideoThumbnail(String url, int width, int height) {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+
+        int kind = MediaStore.Video.Thumbnails.MINI_KIND;
+
+        try {
+            if (Build.VERSION.SDK_INT >= 14) {
+                retriever.setDataSource(url, new HashMap<String, String>());
+            } else {
+                retriever.setDataSource(url);
+            }
+            bitmap = retriever.getFrameAtTime();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                retriever.release();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (kind == MediaStore.Images.Thumbnails.MICRO_KIND && bitmap != null) {
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+        }
+
+        return bitmap;
+    }
 
     public StoryRecyclerAdapter(int layout, Context context) {
         super(layout);
@@ -25,15 +65,15 @@ class StoryRecyclerAdapter extends RecyclerAdapter {
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        videoPlayer = holder.itemView.findViewById(R.id.video_view);
+        imageView = holder.itemView.findViewById(R.id.image_view);
+        jcVideoPlayerStandard = holder.itemView.findViewById(R.id.video_view);
 
-        videoPlayer.setTitle("视频 " + position);
-        videoPlayer.setVideoUri((Activity) context, "http://p8mh3zw09.bkt.clouddn.com/test.mp4");
-        videoPlayer.startOrRestartPlay();
+        jcVideoPlayerStandard.setUp("http://p8mh3zw09.bkt.clouddn.com/test.mp4", JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
+        imageView.setImageBitmap(getVideoThumbnail("http://p8mh3zw09.bkt.clouddn.com/test.mp4", jcVideoPlayerStandard.getWidth(), 200));
     }
     @Override
     public int getItemCount() {
-        return 1;
+        return 10;
     }
 }
 
