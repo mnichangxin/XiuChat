@@ -1,6 +1,5 @@
 package com.lichangxin.xiuchat;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
@@ -13,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.lichangxin.xiuchat.utils.RecyclerAdapter;
@@ -22,9 +22,8 @@ import java.util.HashMap;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 class StoryRecyclerAdapter extends RecyclerAdapter {
-    private Context context;
-    private ImageView imageView;
     private JCVideoPlayerStandard jcVideoPlayerStandard;
+    private ImageView viewImage;
 
     private Bitmap getVideoThumbnail(String url, int width, int height) {
         Bitmap bitmap = null;
@@ -58,27 +57,29 @@ class StoryRecyclerAdapter extends RecyclerAdapter {
         return bitmap;
     }
 
-    public StoryRecyclerAdapter(int layout, Context context) {
-        super(layout);
-
-        this.context = context;
+    public StoryRecyclerAdapter(int layout, int id) {
+        super(layout, id);
     }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        imageView = holder.itemView.findViewById(R.id.image_view);
         jcVideoPlayerStandard = holder.itemView.findViewById(R.id.video_view);
+        viewImage = holder.itemView.findViewById(R.id.video_image);
 
         jcVideoPlayerStandard.setUp("http://p8mh3zw09.bkt.clouddn.com/test.mp4", JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
-        imageView.setImageBitmap(getVideoThumbnail("http://p8mh3zw09.bkt.clouddn.com/test.mp4", jcVideoPlayerStandard.getWidth(), 200));
+        viewImage.setImageBitmap(getVideoThumbnail("http://p8mh3zw09.bkt.clouddn.com/test.mp4", jcVideoPlayerStandard.getWidth(), 200));
     }
     @Override
     public int getItemCount() {
         return 10;
     }
+    @Override
+    public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        super.setmOnItemClickListener(mOnItemClickListener);
+    }
 }
 
 public class StoryFragment extends Fragment {
-    private Context context;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -86,13 +87,25 @@ public class StoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.story_fragment, container, false);
 
-        context = getContext();
-
         recyclerView = view.findViewById(R.id.story_recyclerview);
         layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new StoryRecyclerAdapter(R.layout.story_fragment_item, context));
+
+        StoryRecyclerAdapter storyRecyclerAdapter = new StoryRecyclerAdapter(R.layout.story_fragment_item, R.id.video_image);
+
+        storyRecyclerAdapter.setmOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                FrameLayout videoContainer = (FrameLayout) view.getParent();
+                JCVideoPlayerStandard jcVideoPlayerStandard = videoContainer.findViewById(R.id.video_view);
+
+                view.setVisibility(View.GONE);
+                jcVideoPlayerStandard.startVideo();
+            }
+        });
+
+        recyclerView.setAdapter(storyRecyclerAdapter);
 
         return view;
     }

@@ -31,8 +31,8 @@ class PersonalRecyclerAdapter extends RecyclerAdapter {
     private TextView commit;
     private TextView fav;
 
-    public PersonalRecyclerAdapter(int layout, JsonArray userDynamic, JsonObject userInfo) {
-        super(layout);
+    public PersonalRecyclerAdapter(int layout, int id, JsonArray userDynamic, JsonObject userInfo) {
+        super(layout, id);
 
         this.userDynamic = userDynamic;
         this.userInfo = userInfo;
@@ -98,7 +98,7 @@ public class PersonalFragment extends Fragment {
 
                     if (jsonObject.get("status").getAsInt() == 1) {
                         recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setAdapter(new PersonalRecyclerAdapter(R.layout.share_fragment_item, jsonObject.get("data").getAsJsonArray(), userInfo));
+                        recyclerView.setAdapter(new PersonalRecyclerAdapter(R.layout.share_fragment_item, 0, jsonObject.get("data").getAsJsonArray(), userInfo));
                     } else {
                         Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
                     }

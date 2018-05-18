@@ -43,8 +43,8 @@ class ShareRecyclerAdapter extends RecyclerAdapter {
     private String URL;
     private Context context;
 
-    public ShareRecyclerAdapter(int layout, JsonArray userDynamic, Context context) {
-        super(layout);
+    public ShareRecyclerAdapter(int layout, int id, JsonArray userDynamic, Context context) {
+        super(layout, id);
 
         this.userDynamic = userDynamic;
         this.context = context;
@@ -129,6 +129,7 @@ class ShareRecyclerAdapter extends RecyclerAdapter {
                 Intent intent = new Intent(context, ShareDetailActivity.class);
                 intent.putExtra("dynamicId", jsonObject.get("_id").getAsString());
                 intent.putExtra("isCommit", true);
+
                 context.startActivity(intent);
             }
         });
@@ -210,7 +211,7 @@ public class ShareFragment extends Fragment {
 
                 if (jsonObject.get("status").getAsInt() == 1) {
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(new ShareRecyclerAdapter(R.layout.share_fragment_item, jsonObject.get("data").getAsJsonArray(), context));
+                    recyclerView.setAdapter(new ShareRecyclerAdapter(R.layout.share_fragment_item, 0, jsonObject.get("data").getAsJsonArray(), context));
                 } else {
                     Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
                 }

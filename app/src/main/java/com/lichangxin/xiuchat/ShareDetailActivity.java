@@ -30,8 +30,8 @@ class CommitAdapter extends RecyclerAdapter {
     private TextView nickname;
     private TextView content;
 
-    public CommitAdapter(int layout, JsonArray commitInfo) {
-        super(layout);
+    public CommitAdapter(int layout, int id, JsonArray commitInfo) {
+        super(layout, id);
 
         this.commitInfo = commitInfo;
     }
@@ -169,7 +169,7 @@ public class ShareDetailActivity extends AppCompatActivity {
                     fav.setText(jsonData.get("fav").getAsInt() + "");
 
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(new CommitAdapter(R.layout.share_commit_item, commiterInfo));
+                    recyclerView.setAdapter(new CommitAdapter(R.layout.share_commit_item, 0, commiterInfo));
                 } else {
                     Toast.makeText(ShareDetailActivity.this, "网络错误", Toast.LENGTH_SHORT);
                 }

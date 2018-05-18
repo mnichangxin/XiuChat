@@ -11,15 +11,22 @@ import android.view.ViewGroup;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private int layout;
+    private int id;
+    private OnItemClickListener mOnItemClickListener;
 
-    public RecyclerAdapter(int layout) {
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public RecyclerAdapter(int layout, int id) {
         this.layout = layout;
+        this.id = id;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view, mOnItemClickListener, id);
 
         return viewHolder;
     }
@@ -31,9 +38,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View itemView) {
+    public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private OnItemClickListener mOnItemClickListener;
+
+        public ViewHolder(View itemView, OnItemClickListener mOnItemClickListener, int id) {
             super(itemView);
+
+            this.mOnItemClickListener = mOnItemClickListener;
+
+            if (id == 0) {
+                return;
+            }
+
+            itemView = itemView.findViewById(id);
+
+            itemView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view) {
+            mOnItemClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 }
