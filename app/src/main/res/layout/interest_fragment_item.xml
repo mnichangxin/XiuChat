@@ -18,6 +18,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/head_1" />
             <TextView
+                android:id="@+id/interest_nickname"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
@@ -26,6 +27,7 @@
                 android:textSize="18sp"
                 android:textColor="#000" />
             <TextView
+                android:id="@+id/interest_activity"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,19 +43,39 @@
                 android:textColor="#000" />
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/video_container"
+        <LinearLayout
             android:layout_marginTop="20dp"
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-                android:id="@+id/video_view"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#e4e3e3" >
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
-            <ImageView
-                android:id="@+id/video_image"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/head_1" />
+                <TextView
+                    android:id="@+id/origin_nickname"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="..."
+                    android:textSize="18sp"
+                    android:textColor="#000" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/origin_content"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
-        </FrameLayout>
+                android:layout_height="wrap_content"
+                android:text=".........................................................
+......................................................"
+                android:textSize="18sp"
+                android:textColor="#000" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
