@@ -1,6 +1,5 @@
 package com.lichangxin.xiuchat;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,8 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
@@ -25,6 +23,10 @@ import okhttp3.Request;
 
 class EncounterRecyclerAdapter extends RecyclerAdapter {
     private JsonArray jsonArray;
+    private JsonObject jsonObject;
+    private TextView encounterNickname;
+    private TextView encounterStatus;
+    private TextView encounterSignature;
 
     public EncounterRecyclerAdapter(int layout, int id, JsonArray jsonArray) {
         super(layout, id);
@@ -33,19 +35,24 @@ class EncounterRecyclerAdapter extends RecyclerAdapter {
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
+        jsonObject = jsonArray.get(position).getAsJsonObject();
+
+        encounterNickname = holder.itemView.findViewById(R.id.encounter_nickname);
+        encounterStatus = holder.itemView.findViewById(R.id.encounter_status);
+        encounterSignature = holder.itemView.findViewById(R.id.encounter_signature);
+
+        encounterNickname.setText(jsonObject.get("nickname").getAsString());
+        encounterSignature.setText(jsonObject.get("signature").getAsString());
     }
     @Override
     public int getItemCount() {
-        return 10;
+        return jsonArray.size();
     }
 }
 
 public class EncounterFragment extends Fragment {
-    private RelativeLayout encounterContainer;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private Button openEncounterBtn;
     private String URL;
 
     @Override
@@ -57,35 +64,24 @@ public class EncounterFragment extends Fragment {
 
         URL = ProperTies.getProperties().getProperty("URL");
 
-        encounterContainer = view.findViewById(R.id.encounter_container);
-        openEncounterBtn = view.findViewById(R.id.open_encounter_btn);
-
-        openEncounterBtn.setOnClickListener(new View.OnClickListener() {
+        NetRequest.getFormRequest(URL + "/api/recommendedUsers", null, new NetRequest.DataCallBack() {
             @Override
-            public void onClick(View view) {
-                encounterContainer.setBackgroundColor(Color.parseColor("#e6e6e6"));
-                openEncounterBtn.setVisibility(View.GONE);
+            public void requestSuccess(String result) throws Exception {
+                JsonParser jsonParser = new JsonParser();
+                JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
 
-                NetRequest.postFormRequest(URL + "/api/recommendedUsers", null, new NetRequest.DataCallBack() {
-                    @Override
-                    public void requestSuccess(String result) throws Exception {
-                        JsonParser jsonParser = new JsonParser();
-                        JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
-
-                        if (jsonObject.get("status").getAsInt() == 0) {
-                            Toast.makeText(getContext(), "暂无推荐", Toast.LENGTH_SHORT).show();
-                        } else if (jsonObject.get("status").getAsInt() == 1) {
-                            recyclerView.setLayoutManager(layoutManager);
-                            recyclerView.setAdapter(new EncounterRecyclerAdapter(R.layout.encounter_fragment_item, 0, jsonObject.get("data").getAsJsonArray()));
-                        } else {
-                            Toast.makeText(getContext(), "系统错误", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    @Override
-                    public void requestFailure(Request request, IOException e) {
-                        Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (jsonObject.get("status").getAsInt() == 0) {
+                    Toast.makeText(getContext(), "暂无推荐", Toast.LENGTH_SHORT).show();
+                } else if (jsonObject.get("status").getAsInt() == 1) {
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(new EncounterRecyclerAdapter(R.layout.encounter_fragment_item, 0, jsonObject.get("data").getAsJsonArray()));
+                } else {
+                    Toast.makeText(getContext(), "系统错误", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void requestFailure(Request request, IOException e) {
+                Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
             }
         });
 

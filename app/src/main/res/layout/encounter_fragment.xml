@@ -1,19 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/encounter_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#b7b7b7">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/encounter_recyclerview"
+    android:background="#e6e6e6">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <Button
-        android:id="@+id/open_encounter_btn"
-        android:layout_centerInParent="true"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="开启邂逅"
-        android:textColor="#fff"
-        android:textSize="16sp"
-        android:background="@drawable/shape_btn_oval" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/encounter_top"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="为你推荐了这些人"
+            android:textSize="16sp"
+            android:textColor="#4e4e4e" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/encounter_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>
