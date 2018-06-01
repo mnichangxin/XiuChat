@@ -1,7 +1,6 @@
 package com.lichangxin.xiuchat;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.lichangxin.xiuchat.utils.BaseFragment;
 import com.lichangxin.xiuchat.utils.NetRequest;
 import com.lichangxin.xiuchat.utils.ProperTies;
 import com.lichangxin.xiuchat.utils.RecyclerAdapter;
@@ -50,14 +50,26 @@ class EncounterRecyclerAdapter extends RecyclerAdapter {
     }
 }
 
-public class EncounterFragment extends Fragment {
+public class EncounterFragment extends BaseFragment {
+    private View view;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private String URL;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.encounter_fragment, container, false);
+        view = inflater.inflate(R.layout.encounter_fragment, container, false);
+
+        isPrepared = true;
+        loadData();
+
+        return view;
+    }
+    @Override
+    protected void loadData() {
+        if (!isPrepared || !isVisble) {
+            return;
+        }
 
         recyclerView = view.findViewById(R.id.encounter_recyclerview);
         layoutManager = new LinearLayoutManager(getContext());
@@ -84,7 +96,5 @@ public class EncounterFragment extends Fragment {
                 Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
             }
         });
-
-        return view;
     }
 }

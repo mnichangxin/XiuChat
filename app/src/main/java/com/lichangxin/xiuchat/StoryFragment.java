@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.lichangxin.xiuchat.utils.BaseFragment;
 import com.lichangxin.xiuchat.utils.RecyclerAdapter;
 
 import java.util.HashMap;
@@ -71,7 +72,7 @@ class StoryRecyclerAdapter extends RecyclerAdapter {
     }
     @Override
     public int getItemCount() {
-        return 10;
+        return 1;
     }
     @Override
     public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
@@ -79,13 +80,25 @@ class StoryRecyclerAdapter extends RecyclerAdapter {
     }
 }
 
-public class StoryFragment extends Fragment {
+public class StoryFragment extends BaseFragment {
+    private View view;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.story_fragment, container, false);
+        view = inflater.inflate(R.layout.story_fragment, container, false);
+
+        isPrepared = true;
+        loadData();
+
+        return view;
+    }
+    @Override
+    protected void loadData() {
+        if(!isPrepared || !isVisble) {
+            return;
+        }
 
         recyclerView = view.findViewById(R.id.story_recyclerview);
         layoutManager = new LinearLayoutManager(getContext());
@@ -106,7 +119,5 @@ public class StoryFragment extends Fragment {
         });
 
         recyclerView.setAdapter(storyRecyclerAdapter);
-
-        return view;
     }
 }

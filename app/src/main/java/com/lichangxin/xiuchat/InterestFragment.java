@@ -1,7 +1,6 @@
 package com.lichangxin.xiuchat;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import okhttp3.Request;
 
+import com.lichangxin.xiuchat.utils.BaseFragment;
 import com.lichangxin.xiuchat.utils.NetRequest;
 import com.lichangxin.xiuchat.utils.ProperTies;
 import com.lichangxin.xiuchat.utils.RecyclerAdapter;
@@ -70,7 +70,7 @@ class InterestRecyclerAdapter extends RecyclerAdapter {
     }
 }
 
-public class InterestFragment extends Fragment {
+public class InterestFragment extends BaseFragment {
     private View view;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -79,6 +79,17 @@ public class InterestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.interest_fragment, container, false);
+
+        isPrepared = true;
+        loadData();
+
+        return view;
+    }
+    @Override
+    protected void loadData() {
+        if(!isPrepared || !isVisble) {
+            return;
+        }
 
         recyclerView = view.findViewById(R.id.interest_recyclerview);
 
@@ -104,7 +115,5 @@ public class InterestFragment extends Fragment {
                 Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
             }
         });
-
-        return view;
     }
 }

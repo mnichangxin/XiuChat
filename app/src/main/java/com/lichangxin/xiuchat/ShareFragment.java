@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.lichangxin.xiuchat.utils.BaseFragment;
 import com.lichangxin.xiuchat.utils.CustomDialog;
 import com.lichangxin.xiuchat.utils.Global;
 import com.lichangxin.xiuchat.utils.NetRequest;
@@ -175,7 +175,8 @@ class ShareRecyclerAdapter extends RecyclerAdapter {
     }
 }
 
-public class ShareFragment extends Fragment {
+public class ShareFragment extends BaseFragment {
+    private View view;
     private String URL;
     private Context context;
     private RecyclerView recyclerView;
@@ -195,7 +196,18 @@ public class ShareFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.share_fragment, container, false);
+        view = inflater.inflate(R.layout.share_fragment, container, false);
+
+        isPrepared = true;
+        loadData();
+
+        return view;
+    }
+    @Override
+    protected void loadData() {
+        if(!isPrepared || !isVisble) {
+            return;
+        }
 
         URL = ProperTies.getProperties().getProperty("URL");
         context = getContext();
@@ -223,7 +235,5 @@ public class ShareFragment extends Fragment {
         });
 
         sendDynamic(view);
-
-        return view;
     }
 }

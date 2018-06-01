@@ -15,6 +15,10 @@ import com.lichangxin.xiuchat.utils.FragmentAdapter;
 
 /* 主界面 ViewPager + Fragment */
 public class MainFragment extends Fragment {
+    private View view;
+    private TabLayout tabLayout;
+    private ViewPager cateViewPager;
+    private int page;
     private Bundle args;
     private List<Fragment> viewLists;
     private Fragment share;
@@ -22,6 +26,7 @@ public class MainFragment extends Fragment {
     private Fragment interest;
     private Fragment encounter;
     private Fragment community;
+    private Fragment chat;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,14 +35,14 @@ public class MainFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_fragment, null);
+        view = inflater.inflate(R.layout.main_fragment, null);
 
-        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
-        ViewPager cateViewPager = view.findViewById(R.id.category_view_pager);
+        tabLayout = view.findViewById(R.id.tab_layout);
+        cateViewPager = view.findViewById(R.id.category_view_pager);
 
         viewLists = new ArrayList<>();
 
-        int page = args.getInt("page");
+        page = args.getInt("page");
 
         if (page == 1) {
             share = new ShareFragment();
@@ -53,12 +58,18 @@ public class MainFragment extends Fragment {
 
             viewLists.add(encounter);
             viewLists.add(community);
+        } else if (page == 3) {
+            chat = new ChatFragment();
+
+            viewLists.add(chat);
         }
 
         cateViewPager.setAdapter(new FragmentAdapter(getChildFragmentManager(), viewLists));
         cateViewPager.setCurrentItem(0);
 
-        tabLayout.setupWithViewPager(cateViewPager);
+        if (page == 1 || page == 2) {
+            tabLayout.setupWithViewPager(cateViewPager);
+        }
 
         if (page == 1) {
             tabLayout.getTabAt(0).setText("分享");

@@ -1,13 +1,13 @@
 package com.lichangxin.xiuchat;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lichangxin.xiuchat.utils.BaseFragment;
 import com.lichangxin.xiuchat.utils.ProperTies;
 import com.lichangxin.xiuchat.utils.RecyclerAdapter;
 
@@ -25,7 +25,7 @@ class CommunityRecyclerAdapter extends RecyclerAdapter {
     }
 }
 
-public class CommunityFragment extends Fragment {
+public class CommunityFragment extends BaseFragment {
     private View view;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -35,6 +35,17 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.community_fragment, container, false);
 
+        isPrepared = true;
+        loadData();
+
+        return view;
+    }
+    @Override
+    protected void loadData() {
+        if (isPrepared || isVisble) {
+            return;
+        }
+
         recyclerView = view.findViewById(R.id.community_recyclerview);
         layoutManager = new LinearLayoutManager(getContext());
 
@@ -42,7 +53,5 @@ public class CommunityFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new CommunityRecyclerAdapter(R.layout.community_fragment_item, 0));
-
-        return view;
     }
 }
