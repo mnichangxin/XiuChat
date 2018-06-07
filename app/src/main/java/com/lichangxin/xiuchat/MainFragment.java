@@ -77,7 +77,9 @@ public class MainFragment extends Fragment {
             tabLayout.getTabAt(2).setText("兴趣");
         } else if (page == 2) {
             tabLayout.getTabAt(0).setText("邂逅");
-            tabLayout.getTabAt(1).setText("社群");
+            tabLayout.getTabAt(1).setText("群聊");
+        } else {
+            tabLayout.setVisibility(View.GONE);
         }
 
         return view;

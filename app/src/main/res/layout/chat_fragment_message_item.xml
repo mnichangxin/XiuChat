@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/left_layout"
+        android:paddingRight="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left">
+        <TextView
+            android:id="@+id/left_msg_username"
+            android:layout_weight="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?android:textColorPrimary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="浮生若梦"
+            android:singleLine="true" />
+        <TextView
+            android:id="@+id/left_msg_text"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:layout_weight="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="18sp"
+            android:text="这是聊天内容这是聊天内容这是聊天内容这是聊天内容这是这是聊天内容这是聊天"
+            android:singleLine="false"
+            android:background="@drawable/message_left" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/right_layout"
+        android:paddingLeft="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right">
+        <TextView
+            android:id="@+id/right_msg_text"
+            android:paddingTop="20dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="18sp"
+            android:text="这是聊天内容这是聊天内容这是聊天内容这是聊天内容这是聊天内容这是聊天内容"
+            android:singleLine="false"
+            android:background="@drawable/message_right" />
+        <TextView
+            android:id="@+id/right_msg_username"
+            android:paddingLeft="10dp"
+            android:layout_weight="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?android:textColorPrimary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="浮生若梦"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/action_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/action_msg_text"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="小李加入了群聊"
+            android:textSize="15sp"
+            android:textColor="?android:textColorSecondary" />
+    </LinearLayout>
+</LinearLayout>

@@ -155,10 +155,20 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 
-        navView.setCheckedItem(R.id.nav_call);
+        navView.setCheckedItem(R.id.nav_message);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+                Intent intent = null;
+
+                switch (item.getItemId()) {
+                    case R.id.nav_group:
+                        intent = new Intent(MainActivity.this, CreateGroup.class);
+                        break;
+                }
+
+                startActivity(intent);
+
                 drawerLayout.closeDrawers();
                 return true;
             }
