@@ -1,12 +1,14 @@
 package com.lichangxin.xiuchat;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -68,11 +70,11 @@ class StoryRecyclerAdapter extends RecyclerAdapter {
         viewImage = holder.itemView.findViewById(R.id.video_image);
 
         jcVideoPlayerStandard.setUp("http://p8mh3zw09.bkt.clouddn.com/test.mp4", JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");
-        viewImage.setImageBitmap(getVideoThumbnail("http://p8mh3zw09.bkt.clouddn.com/test.mp4", jcVideoPlayerStandard.getWidth(), 200));
+        viewImage.setImageBitmap(getVideoThumbnail("http://p8mh3zw09.bkt.clouddn.com/test.mp4", jcVideoPlayerStandard.getWidth(), jcVideoPlayerStandard.getHeight()));
     }
     @Override
     public int getItemCount() {
-        return 1;
+        return 5;
     }
     @Override
     public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
@@ -82,8 +84,37 @@ class StoryRecyclerAdapter extends RecyclerAdapter {
 
 public class StoryFragment extends BaseFragment {
     private View view;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private StoryRecyclerAdapter storyRecyclerAdapter;
+
+    private void request() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setLayoutManager(layoutManager);
+
+                storyRecyclerAdapter = new StoryRecyclerAdapter(R.layout.story_fragment_item, R.id.video_image);
+                storyRecyclerAdapter.setmOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        FrameLayout videoContainer = (FrameLayout) view.getParent();
+                        JCVideoPlayerStandard jcVideoPlayerStandard = videoContainer.findViewById(R.id.video_view);
+
+                        view.setVisibility(View.GONE);
+                        jcVideoPlayerStandard.startVideo();
+                    }
+                });
+
+                recyclerView.setAdapter(storyRecyclerAdapter);
+
+                storyRecyclerAdapter.notifyDataSetChanged();
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 50);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,30 +125,25 @@ public class StoryFragment extends BaseFragment {
 
         return view;
     }
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void loadData() {
         if(!isPrepared || !isVisble) {
             return;
         }
 
+        swipeRefreshLayout = view.findViewById(R.id.story_swiperefreshlayout);
         recyclerView = view.findViewById(R.id.story_recyclerview);
         layoutManager = new LinearLayoutManager(getContext());
 
-        recyclerView.setLayoutManager(layoutManager);
-
-        StoryRecyclerAdapter storyRecyclerAdapter = new StoryRecyclerAdapter(R.layout.story_fragment_item, R.id.video_image);
-
-        storyRecyclerAdapter.setmOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorPrimaryDark);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                FrameLayout videoContainer = (FrameLayout) view.getParent();
-                JCVideoPlayerStandard jcVideoPlayerStandard = videoContainer.findViewById(R.id.video_view);
-
-                view.setVisibility(View.GONE);
-                jcVideoPlayerStandard.startVideo();
+            public void onRefresh() {
+                request();
             }
         });
 
-        recyclerView.setAdapter(storyRecyclerAdapter);
+        request();
     }
 }

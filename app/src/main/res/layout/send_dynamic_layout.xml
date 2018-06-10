@@ -26,6 +26,7 @@
             android:gravity="left|top"
             android:textColor="@color/colorPrimaryDark"
             android:minLines="3"
+            android:hint="分享新鲜事..."
             android:background="@null"
             android:cursorVisible="false" />
     </LinearLayout>

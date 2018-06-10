@@ -1,9 +1,13 @@
 package com.lichangxin.xiuchat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -177,10 +181,12 @@ class ShareRecyclerAdapter extends RecyclerAdapter {
 
 public class ShareFragment extends BaseFragment {
     private View view;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private String URL;
     private Context context;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private ShareRecyclerAdapter shareRecyclerAdapter;
 
     private void sendDynamic(View view) {
         FloatingActionButton floatingActionButton = view.findViewById(R.id.float_action_button);
@@ -194,6 +200,39 @@ public class ShareFragment extends BaseFragment {
         });
     }
 
+    private void request() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                NetRequest.getFormRequest(URL + "/api/getAllUserDynamic", null, new NetRequest.DataCallBack() {
+                    @SuppressLint("ResourceAsColor")
+                    @Override
+                    public void requestSuccess(String result) throws Exception {
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
+
+                        if (jsonObject.get("status").getAsInt() == 1) {
+                            shareRecyclerAdapter = new ShareRecyclerAdapter(R.layout.share_fragment_item, 0, jsonObject.get("data").getAsJsonArray(), context);
+
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setAdapter(shareRecyclerAdapter);
+
+                            shareRecyclerAdapter.notifyDataSetChanged();
+
+                            swipeRefreshLayout.setRefreshing(false);
+                        } else {
+                            Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void requestFailure(Request request, IOException e) {
+                        Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }, 300);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.share_fragment, container, false);
@@ -203,6 +242,7 @@ public class ShareFragment extends BaseFragment {
 
         return view;
     }
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void loadData() {
         if(!isPrepared || !isVisble) {
@@ -212,28 +252,20 @@ public class ShareFragment extends BaseFragment {
         URL = ProperTies.getProperties().getProperty("URL");
         context = getContext();
 
+        swipeRefreshLayout = view.findViewById(R.id.share_swiperefreshlayout);
         recyclerView = view.findViewById(R.id.share_recyclerview);
         layoutManager = new LinearLayoutManager(getContext());
 
-        NetRequest.getFormRequest(URL + "/api/getAllUserDynamic", null, new NetRequest.DataCallBack() {
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorPrimaryDark);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void requestSuccess(String result) throws Exception {
-                JsonParser jsonParser = new JsonParser();
-                JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
-
-                if (jsonObject.get("status").getAsInt() == 1) {
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(new ShareRecyclerAdapter(R.layout.share_fragment_item, 0, jsonObject.get("data").getAsJsonArray(), context));
-                } else {
-                    Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void requestFailure(Request request, IOException e) {
-                Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+            public void onRefresh() {
+                request();
             }
         });
 
         sendDynamic(view);
+
+        request();
     }
 }

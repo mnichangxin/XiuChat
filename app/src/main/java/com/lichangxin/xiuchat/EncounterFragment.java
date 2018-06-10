@@ -1,6 +1,10 @@
 package com.lichangxin.xiuchat;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,10 +56,46 @@ class EncounterRecyclerAdapter extends RecyclerAdapter {
 
 public class EncounterFragment extends BaseFragment {
     private View view;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    EncounterRecyclerAdapter encounterRecyclerAdapter;
     private String URL;
 
+
+    private void request() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                NetRequest.getFormRequest(URL + "/api/recommendedUsers", null, new NetRequest.DataCallBack() {
+                    @Override
+                    public void requestSuccess(String result) throws Exception {
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
+
+                        if (jsonObject.get("status").getAsInt() == 0) {
+                            Toast.makeText(getContext(), "暂无推荐", Toast.LENGTH_SHORT).show();
+                        } else if (jsonObject.get("status").getAsInt() == 1) {
+                            encounterRecyclerAdapter = new EncounterRecyclerAdapter(R.layout.encounter_fragment_item, 0, jsonObject.get("data").getAsJsonArray());
+
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setAdapter(encounterRecyclerAdapter);
+
+                            encounterRecyclerAdapter.notifyDataSetChanged();
+
+                            swipeRefreshLayout.setRefreshing(false);
+                        } else {
+                            Toast.makeText(getContext(), "系统错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void requestFailure(Request request, IOException e) {
+                        Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }, 300);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.encounter_fragment, container, false);
@@ -65,36 +105,27 @@ public class EncounterFragment extends BaseFragment {
 
         return view;
     }
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void loadData() {
         if (!isPrepared || !isVisble) {
             return;
         }
 
+        swipeRefreshLayout = view.findViewById(R.id.encounter_swiperefreshlayout);
         recyclerView = view.findViewById(R.id.encounter_recyclerview);
         layoutManager = new LinearLayoutManager(getContext());
 
         URL = ProperTies.getProperties().getProperty("URL");
 
-        NetRequest.getFormRequest(URL + "/api/recommendedUsers", null, new NetRequest.DataCallBack() {
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorPrimaryDark);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void requestSuccess(String result) throws Exception {
-                JsonParser jsonParser = new JsonParser();
-                JsonObject jsonObject = jsonParser.parse(result).getAsJsonObject();
-
-                if (jsonObject.get("status").getAsInt() == 0) {
-                    Toast.makeText(getContext(), "暂无推荐", Toast.LENGTH_SHORT).show();
-                } else if (jsonObject.get("status").getAsInt() == 1) {
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(new EncounterRecyclerAdapter(R.layout.encounter_fragment_item, 0, jsonObject.get("data").getAsJsonArray()));
-                } else {
-                    Toast.makeText(getContext(), "系统错误", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void requestFailure(Request request, IOException e) {
-                Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+            public void onRefresh() {
+                request();
             }
         });
+
+        request();
     }
 }

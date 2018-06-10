@@ -15,9 +15,14 @@
             android:text="为你推荐了这些群"
             android:textSize="16sp"
             android:textColor="#4e4e4e" />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/community_recyclerview"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/community_swiperefreshlayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/community_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 </RelativeLayout>

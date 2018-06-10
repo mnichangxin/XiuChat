@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:background="#fff">
     <LinearLayout
-        android:id="@+id/group_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
@@ -15,7 +14,7 @@
             android:layout_height="50dp"
             android:src="@drawable/head_1" />
         <TextView
-            android:id="@+id/community_nickname"
+            android:id="@+id/chat_nickname"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"

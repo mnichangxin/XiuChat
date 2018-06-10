@@ -34,7 +34,9 @@
         <activity android:name=".EditInfoActivity" />
         <activity android:name=".SendDynamicActivity" />
         <activity android:name=".ShareDetailActivity" />
-        <activity android:name=".CreateGroup"></activity>
+        <activity android:name=".CreateGroup" />
+        <activity android:name=".SetActivity" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>

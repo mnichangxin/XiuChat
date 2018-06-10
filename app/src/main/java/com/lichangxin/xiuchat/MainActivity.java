@@ -165,11 +165,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_group:
                         intent = new Intent(MainActivity.this, CreateGroup.class);
                         break;
+                    case R.id.nav_set:
+                        intent = new Intent(MainActivity.this, SetActivity.class);
+                        break;
                 }
 
-                startActivity(intent);
+                if (intent != null) {
+                    startActivity(intent);
+                }
 
                 drawerLayout.closeDrawers();
+
                 return true;
             }
         });
@@ -216,6 +222,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
+        // 请求网络
+        request();
         // 设置 Toolbar 和 Drawer
         setBar();
         // 设置 ViewPager
@@ -226,7 +234,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
-                request();
                 break;
         }
         return true;
