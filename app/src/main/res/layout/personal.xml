@@ -40,7 +40,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/head_2" />
+                    android:src="@drawable/ic_avatar" />
                 <LinearLayout
                     android:layout_marginTop="50dp"
                     android:layout_centerHorizontal="true"

@@ -6,9 +6,9 @@
             android:icon="@drawable/nav_message"
             android:title="消息"/>
         <item
-            android:id="@+id/nav_recommand"
-            android:icon="@drawable/nav_recommand"
-            android:title="推荐"/>
+            android:id="@+id/nav_hobby"
+            android:icon="@drawable/nav_hobby"
+            android:title="兴趣"/>
         <item
             android:id="@+id/nav_friends"
             android:icon="@drawable/nav_friends"

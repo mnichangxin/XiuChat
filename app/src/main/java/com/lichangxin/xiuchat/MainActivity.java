@@ -162,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = null;
 
                 switch (item.getItemId()) {
+                    case R.id.nav_hobby:
+                        intent = new Intent(MainActivity.this, );
+                        break;
                     case R.id.nav_group:
                         intent = new Intent(MainActivity.this, CreateGroup.class);
                         break;
