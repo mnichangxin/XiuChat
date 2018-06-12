@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.nav_hobby:
-                        intent = new Intent(MainActivity.this, );
+                        intent = new Intent(MainActivity.this, HobbyActivity.class);
                         break;
                     case R.id.nav_group:
                         intent = new Intent(MainActivity.this, CreateGroup.class);

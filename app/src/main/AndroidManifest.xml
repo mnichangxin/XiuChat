@@ -36,7 +36,8 @@
         <activity android:name=".ShareDetailActivity" />
         <activity android:name=".CreateGroup" />
         <activity android:name=".SetActivity" />
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".HobbyActivity"></activity>
     </application>
 
 </manifest>
