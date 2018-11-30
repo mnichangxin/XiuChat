@@ -30,4 +30,3 @@ Encountered users can chat with each other and open the advanced encounter mode 
 
 * Android 
 * Android Derivatives
- 
