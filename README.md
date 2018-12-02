@@ -28,4 +28,6 @@ Encountered users can chat with each other and open the advanced encounter mode 
 
 # Technology
 
-* Android and Derivatives
+* Android 
+* Android Derivatives
+ 
