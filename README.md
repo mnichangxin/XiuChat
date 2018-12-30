@@ -1,48 +1,31 @@
 # XiuChat
 
-咻聊，每一次相遇，都是一种缘分
+Chat, every encounter, is a kind of fate.
 
-## Introduction
+# Introduction
 
-纵观当前社交媒体比如微博、知乎、网易云音乐等，聚集了大量的用户。然而用户的特征属性是不同的，比如有的人喜欢在微博分享新鲜的事，有的人喜欢在知乎分享知识，有的人喜欢在网易云音乐分享经历等。不同用户群体有着他们自己的特征，但又有共同特征。如何把这些不同的用户群体联系起来，连接相同特征的人，连接不同特征的人，组成一个多维属性的群体。于是旨在设计一个社交平台，综合主流社交媒体，把当前多维特征的用户连接起来。再根据用户动态，实时调整用户的坐标，开发基于用户特征画像的社交平台。
+Throughout the current social media, such as Weibo, Zhihu, Netease cloud music and so on, a large number of users have gathered. However, the characteristics of users are different, for example, some people like to share new things on Weibo, some people like to share knowledge, some people like to share experiences on Internet Yiyun music, and so on. Different user groups have their own characteristics, but they have common characteristics. How to connect these different user groups, connect people with the same characteristics, connect people with different characteristics, and form a multi-dimensional attribute group. So the aim is to design a social platform that integrates mainstream social media and connects users with current multi-dimensional features. Then, according to the user's dynamic, real-time adjustment of the user's coordinates, the development of a social platform based on user feature portraits.
 
-大致功能如下：
+The main functions are as follows:
 
-1. 分享
+1. share
+Users can share interesting things or interesting things based on social media such as Weibo, Zhihu, Netease cloud music and so on.
 
-用户分享有趣的事或者感兴趣的事，可以基于微博、知乎、网易云音乐等社交媒体进行二次分享
+2. interest
+Users can comment and comment on developments of interest and record them in the event of interest.
 
-2. 兴趣
+3. story
+User-generated articles and stories can be shared here, as well as more high-quality content.
 
-用户对感兴趣的动态可以点赞和评论，并记录到感兴趣的事中
+4. encounter
+According to the user's interest, a group of characteristic users can be recommended. Users can meet these users, but there will be a threshold for the number of added friends, which will increase with the increase of user level.
 
-3. 故事
+5. community
+Users with similar characteristics can request to enter the community, but not permanent. As long as the difference between a user's characteristics and the community characteristics exceeds the threshold, they will leave automatically.
 
-用户原创文章和故事可以在这里分享，以及更多的优质内容
+6. chat
+Encountered users can chat with each other and open the advanced encounter mode when their relative interest is high.
 
-4. 邂逅
+# Technology
 
-根据用户兴趣推荐一批特征用户，用户可以邂逅这些用户，但添加好友的数量会存在一个阈值，会随用户等级的提高而提高这个值
-
-5. 社群
-
-具有类似特征的用户可以要求进入社群，但不是永久的，只要用户的某一特征和社群特征差异度超过阈值，就会自动离开
-
-6. 聊天
-
-邂逅的用户可以相互聊天，并在相对的兴趣度较高时，开启高级邂逅模式
-
-## Technology
-
-1. 客户端：
-
-* Android 及衍生技术
-
-2. 服务端：
-
-* Node.js 平台
-* Express 框架
-* MongoDB 数据库
-
-
-**毕设题目，目测时间有点紧(｀・ω・´)**
+* Android and Derivatives
