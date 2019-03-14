@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <tilte>JSBridge 测试</tilte>
+    </head>
+    <body>
+        <h1>Only test......</h1>
+        <Button id="button">Show Toast</Button>
+        <script>
+            function getData(data) {
+                alert(data)
+            }
+            document.getElementById('button').addEventListener('click', function() {
+               window.JSBridge.showToast('' + getData)
+            })
+        </script>
+    </body>
+</html>
